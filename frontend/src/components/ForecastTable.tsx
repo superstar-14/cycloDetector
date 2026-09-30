@@ -116,27 +116,51 @@ export function ForecastTable({ storm }: ForecastTableProps) {
   };
 
   return (
-    <div style={{ flex: 1, overflow: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <div style={{ flex: 1, overflow: 'auto', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', background: '#F8FAFC' }}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 style={{ margin: 0 }}>📊 Forecast Parameter Table</h2>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+          <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: '#0F172A' }}>
+            📊 Forecast Parameter Table
+          </h2>
+          <p style={{ fontSize: '0.78rem', color: '#64748B', marginTop: '0.25rem' }}>
             {storm.name} ({storm.storm_id}) • Reference Time: {new Date(storm.updated_at).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST
           </p>
         </div>
         <div className="flex gap-2">
-          <button className="btn btn-sm btn-ghost" onClick={handleExportCSV}>
+          <button
+            className="btn btn-sm"
+            onClick={handleExportCSV}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #CBD5E1',
+              color: '#1E3A5F',
+              borderRadius: '8px',
+              padding: '0.4rem 0.8rem',
+              fontWeight: 600,
+            }}
+          >
             📥 Export CSV
           </button>
-          <button className="btn btn-sm btn-ghost" onClick={handlePrint}>
+          <button
+            className="btn btn-sm"
+            onClick={handlePrint}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #CBD5E1',
+              color: '#1E3A5F',
+              borderRadius: '8px',
+              padding: '0.4rem 0.8rem',
+              fontWeight: 600,
+            }}
+          >
             📄 Export / Print PDF
           </button>
         </div>
       </div>
 
       {/* Table */}
-      <div className="card" style={{ overflow: 'auto' }}>
+      <div className="card" style={{ overflow: 'auto', border: '1px solid #E2E8F0', borderRadius: '12px' }}>
         <table className="data-table" style={{ width: '100%', tableLayout: 'auto' }}>
           <thead>
             <tr>
@@ -160,16 +184,17 @@ export function ForecastTable({ storm }: ForecastTableProps) {
               <tr
                 key={i}
                 style={{
-                  background: pt.lead_hours === 0 ? 'rgba(59, 130, 246, 0.08)' : undefined,
+                  background: pt.lead_hours === 0 ? '#DBEAFE' : undefined,
+                  fontWeight: pt.lead_hours === 0 ? 600 : undefined,
                 }}
               >
-                <td style={{ fontWeight: 700, fontFamily: 'var(--font-mono)' }}>
+                <td style={{ fontWeight: 700, fontFamily: 'var(--font-mono)', color: pt.lead_hours === 0 ? '#1D4ED8' : '#0F172A' }}>
                   {pt.lead_hours === 0 ? 'T+0' : `+${pt.lead_hours}h`}
                 </td>
-                <td style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)' }}>
+                <td style={{ fontSize: '0.74rem', fontFamily: 'var(--font-mono)', color: '#475569' }}>
                   {pt.valid_time_ist}
                 </td>
-                <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem' }}>
+                <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#0F172A' }}>
                   {pt.lat.toFixed(1)}°N {pt.lon.toFixed(1)}°E
                 </td>
                 <td
@@ -177,39 +202,41 @@ export function ForecastTable({ storm }: ForecastTableProps) {
                     fontWeight: 700,
                     fontFamily: 'var(--font-mono)',
                     color: pt.category_color,
+                    fontSize: '0.85rem',
                   }}
                 >
                   {pt.max_wind_kt}
                 </td>
-                <td style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)' }}>
+                <td style={{ fontFamily: 'var(--font-mono)', color: '#64748B' }}>
                   {pt.max_wind_kmh}
                 </td>
-                <td style={{ fontFamily: 'var(--font-mono)' }}>{pt.gust_kt}</td>
-                <td style={{ fontFamily: 'var(--font-mono)' }}>{pt.mslp_hpa}</td>
+                <td style={{ fontFamily: 'var(--font-mono)', color: '#0F172A' }}>{pt.gust_kt}</td>
+                <td style={{ fontFamily: 'var(--font-mono)', color: '#475569' }}>{pt.mslp_hpa}</td>
                 <td>
                   <span
                     className="cat-badge"
                     style={{
-                      borderColor: pt.category_color + '60',
+                      borderColor: pt.category_color + '40',
                       color: pt.category_color,
                       background: pt.category_color + '15',
-                      fontSize: '0.6rem',
+                      fontSize: '0.65rem',
+                      fontWeight: 700,
                     }}
                   >
                     {pt.category}
                   </span>
                 </td>
-                <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem' }}>
+                <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.74rem', color: '#0F172A' }}>
                   {pt.forward_speed_kmh?.toFixed(0)} km/h
                 </td>
-                <td style={{ fontFamily: 'var(--font-mono)' }}>{pt.rmw_km?.toFixed(0)}</td>
-                <td style={{ fontFamily: 'var(--font-mono)', color: pt.dist_to_coast_km! < 100 ? 'var(--accent-red)' : undefined }}>
+                <td style={{ fontFamily: 'var(--font-mono)', color: '#475569' }}>{pt.rmw_km?.toFixed(0)}</td>
+                <td style={{ fontFamily: 'var(--font-mono)', color: pt.dist_to_coast_km! < 100 ? '#EF4444' : '#0F172A', fontWeight: pt.dist_to_coast_km! < 100 ? 700 : 400 }}>
                   {pt.dist_to_coast_km?.toFixed(0)} km
                 </td>
-                <td style={{ fontFamily: 'var(--font-mono)' }}>
+                <td style={{ fontFamily: 'var(--font-mono)', color: '#0F172A', fontWeight: 600 }}>
                   {pt.eta_landfall_hours && pt.eta_landfall_hours > 0 ? `${pt.eta_landfall_hours.toFixed(0)}h` : 'LF'}
                 </td>
-                <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: '#64748B' }}>
                   ±{pt.position_error_km?.toFixed(0)} km
                 </td>
               </tr>
@@ -219,52 +246,84 @@ export function ForecastTable({ storm }: ForecastTableProps) {
       </div>
 
       {/* Charts */}
-      <div className="card">
-        <div className="card-header">
-          <h4 style={{ fontSize: '0.8rem', margin: 0 }}>📈 Forecast Charts</h4>
-          <div className="flex gap-1">
+      <div className="card" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
+        <div className="card-header" style={{ padding: '0.85rem 1.15rem' }}>
+          <h4 style={{ fontSize: '0.9rem', margin: 0, fontWeight: 700, color: '#0F172A' }}>
+            📈 Forecast Charts
+          </h4>
+          <div className="flex gap-1.5">
             {[
               { key: 'intensity' as const, label: 'Intensity' },
               { key: 'cone' as const, label: 'Cone Radius' },
               { key: 'speed' as const, label: 'Fwd Speed' },
               { key: 'distance' as const, label: 'Coast Dist.' },
-            ].map(btn => (
-              <button
-                key={btn.key}
-                className={`btn btn-sm ${activeChart === btn.key ? 'btn-primary' : 'btn-ghost'}`}
-                onClick={() => setActiveChart(btn.key)}
-              >
-                {btn.label}
-              </button>
-            ))}
+            ].map(btn => {
+              const isSelected = activeChart === btn.key;
+              return (
+                <button
+                  key={btn.key}
+                  className="btn btn-sm"
+                  style={{
+                    fontSize: '0.74rem',
+                    fontWeight: isSelected ? 600 : 500,
+                    padding: '0.3rem 0.65rem',
+                    borderRadius: '6px',
+                    background: isSelected ? '#2563EB' : '#FFFFFF',
+                    color: isSelected ? '#FFFFFF' : '#1E3A5F',
+                    border: isSelected ? '1px solid #2563EB' : '1px solid #CBD5E1',
+                    boxShadow: isSelected ? '0 1px 3px rgba(37,99,235,0.2)' : 'none',
+                  }}
+                  onClick={() => setActiveChart(btn.key)}
+                >
+                  {btn.label}
+                </button>
+              );
+            })}
           </div>
         </div>
-        <div className="card-body">
+        <div className="card-body" style={{ background: '#FFFFFF', padding: '1.25rem' }}>
           {/* SVG Chart Visualization */}
           <svg width="100%" height="220" viewBox="0 0 700 220" style={{ overflow: 'visible' }}>
-            {/* Background */}
-            <rect x="60" y="10" width="620" height="180" fill="var(--bg-tertiary)" rx="4" />
+            {/* Background Canvas */}
+            <rect x="60" y="10" width="620" height="180" fill="#F8FAFC" stroke="#E2E8F0" strokeWidth="1" rx="6" />
+
+            {/* Horizontal Grid lines */}
+            {[0, 0.25, 0.5, 0.75, 1].map((pct, idx) => {
+              const y = 190 - pct * 170;
+              return (
+                <line
+                  key={idx}
+                  x1="60"
+                  y1={y}
+                  x2="680"
+                  y2={y}
+                  stroke="#E2E8F0"
+                  strokeWidth="0.8"
+                  strokeDasharray="4 4"
+                />
+              );
+            })}
 
             {/* Category threshold lines (for intensity chart) */}
             {activeChart === 'intensity' && (
               <>
                 {[
-                  { kt: 34, label: 'CS (34kt)', color: 'var(--cat-cs)', y: 180 - (34 / 140 * 170) },
-                  { kt: 48, label: 'SCS (48kt)', color: 'var(--cat-scs)', y: 180 - (48 / 140 * 170) },
-                  { kt: 64, label: 'VSCS (64kt)', color: 'var(--cat-vscs)', y: 180 - (64 / 140 * 170) },
-                  { kt: 90, label: 'ESCS (90kt)', color: 'var(--cat-escs)', y: 180 - (90 / 140 * 170) },
-                  { kt: 120, label: 'SuCS (120kt)', color: 'var(--cat-sucs)', y: 180 - (120 / 140 * 170) },
+                  { kt: 34, label: 'CS (34kt)', color: '#14B8A6', y: 180 - (34 / 140 * 170) },
+                  { kt: 48, label: 'SCS (48kt)', color: '#F59E0B', y: 180 - (48 / 140 * 170) },
+                  { kt: 64, label: 'VSCS (64kt)', color: '#F97316', y: 180 - (64 / 140 * 170) },
+                  { kt: 90, label: 'ESCS (90kt)', color: '#EF4444', y: 180 - (90 / 140 * 170) },
+                  { kt: 120, label: 'SuCS (120kt)', color: '#B91C1C', y: 180 - (120 / 140 * 170) },
                 ].map(thresh => (
                   <g key={thresh.kt}>
                     <line
                       x1="60" y1={thresh.y + 10}
                       x2="680" y2={thresh.y + 10}
                       stroke={thresh.color}
-                      strokeWidth="0.5"
+                      strokeWidth="0.8"
                       strokeDasharray="4 3"
-                      opacity="0.4"
+                      opacity="0.6"
                     />
-                    <text x="55" y={thresh.y + 14} fill={thresh.color} fontSize="7" textAnchor="end" opacity="0.7">
+                    <text x="55" y={thresh.y + 14} fill={thresh.color} fontSize="8" fontWeight="600" textAnchor="end">
                       {thresh.label}
                     </text>
                   </g>
@@ -285,7 +344,7 @@ export function ForecastTable({ storm }: ForecastTableProps) {
                 const y = 190 - (val / 140 * 170);
                 return `${x},${y}`;
               }).join(' ')}
-              fill="rgba(59, 130, 246, 0.12)"
+              fill="rgba(37, 99, 235, 0.12)"
               stroke="none"
             />
 
@@ -304,7 +363,7 @@ export function ForecastTable({ storm }: ForecastTableProps) {
                 return `${x},${y}`;
               }).join(' ')}
               fill="none"
-              stroke="var(--accent-blue)"
+              stroke="#2563EB"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -321,15 +380,15 @@ export function ForecastTable({ storm }: ForecastTableProps) {
                           activeChart === 'cone' ? 350 :
                           activeChart === 'speed' ? 35 : 600;
               const y = 190 - (Math.min(max, val) / max * 170);
-              const color = activeChart === 'intensity' ? pt.category_color : 'var(--accent-blue)';
+              const color = activeChart === 'intensity' ? pt.category_color : '#2563EB';
 
               return (
                 <g key={i}>
-                  <circle cx={x} cy={y} r="4" fill={color} stroke="var(--bg-card)" strokeWidth="1.5" />
-                  <text x={x} y={205} fill="var(--text-muted)" fontSize="8" textAnchor="middle">
+                  <circle cx={x} cy={y} r="4.5" fill={color} stroke="#FFFFFF" strokeWidth="2" />
+                  <text x={x} y={205} fill="#64748B" fontSize="8" fontWeight="600" textAnchor="middle">
                     {pt.lead_hours === 0 ? 'Now' : `+${pt.lead_hours}h`}
                   </text>
-                  <text x={x} y={y - 8} fill="var(--text-secondary)" fontSize="7" textAnchor="middle">
+                  <text x={x} y={y - 8} fill="#0F172A" fontSize="8" fontWeight="700" textAnchor="middle">
                     {Math.round(val)}
                   </text>
                 </g>
@@ -337,7 +396,7 @@ export function ForecastTable({ storm }: ForecastTableProps) {
             })}
 
             {/* Y-axis label */}
-            <text x="10" y="105" fill="var(--text-muted)" fontSize="8" textAnchor="middle" transform="rotate(-90, 10, 105)">
+            <text x="12" y="105" fill="#64748B" fontSize="8" fontWeight="600" textAnchor="middle" transform="rotate(-90, 12, 105)">
               {activeChart === 'intensity' ? 'Max Wind (kt)' :
                activeChart === 'cone' ? 'Cone Radius (km)' :
                activeChart === 'speed' ? 'Fwd Speed (km/h)' : 'Dist to Coast (km)'}
@@ -348,11 +407,12 @@ export function ForecastTable({ storm }: ForecastTableProps) {
 
       {/* Disclaimer */}
       <div style={{
-        fontSize: '0.65rem',
-        color: 'var(--text-muted)',
-        padding: '0.75rem',
-        background: 'var(--bg-tertiary)',
-        borderRadius: 'var(--radius-sm)',
+        fontSize: '0.68rem',
+        color: '#64748B',
+        padding: '0.85rem 1rem',
+        background: '#F8FAFC',
+        border: '1px solid #E2E8F0',
+        borderRadius: '8px',
         lineHeight: 1.6,
       }}>
         ⓘ Deterministic baseline & ensemble distribution computed from in-house PyTorch model ensemble. P10/P90 represent 10th and 90th percentile bounds across 200 Monte Carlo members. Official cyclone advisories and landfall warnings are issued exclusively by the India Meteorological Department (IMD RSMC New Delhi).

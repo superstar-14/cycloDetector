@@ -35,70 +35,102 @@ export function ValidationBacktest() {
   ];
 
   return (
-    <div style={{ flex: 1, overflow: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <div style={{ flex: 1, overflow: 'auto', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', background: '#F8FAFC' }}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 style={{ margin: 0 }}>🎯 Backtest & Model Validation</h2>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+          <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: '#0F172A' }}>
+            🎯 Backtest & Model Validation
+          </h2>
+          <p style={{ fontSize: '0.78rem', color: '#64748B', marginTop: '0.25rem' }}>
             Empirical evaluation against 42 North Indian Ocean cyclones (2014–2024) using IMD Best Tracks & IBTrACS
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="badge badge-live">Verified Benchmark</span>
-          <button className="btn btn-sm btn-ghost" onClick={() => window.print()}>🖨️ Print Report</button>
+          <span
+            className="badge"
+            style={{
+              background: '#F0FDF4',
+              color: '#16A34A',
+              border: '1px solid #BBF7D0',
+              fontWeight: 700,
+              fontSize: '0.72rem',
+              padding: '0.25rem 0.65rem',
+            }}
+          >
+            Verified Benchmark
+          </span>
+          <button
+            className="btn btn-sm"
+            onClick={() => window.print()}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #CBD5E1',
+              color: '#1E3A5F',
+              borderRadius: '8px',
+              padding: '0.4rem 0.8rem',
+              fontWeight: 600,
+            }}
+          >
+            🖨️ Print Report
+          </button>
         </div>
       </div>
 
       {/* Summary Metrics */}
       <div className="grid-4">
-        <div className="card p-3">
+        <div className="card p-3" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
           <div className="metric">
-            <span className="metric-label">T+24h Track Error</span>
-            <span className="metric-value text-blue">82 km</span>
-            <span style={{ fontSize: '0.65rem', color: 'var(--accent-green)' }}>▼ 24.1% vs IMD operational (108 km)</span>
+            <span className="metric-label" style={{ color: '#2563EB' }}>T+24h Track Error</span>
+            <span className="metric-value" style={{ color: '#2563EB', fontSize: '1.5rem' }}>82 km</span>
+            <span style={{ fontSize: '0.68rem', color: '#16A34A', fontWeight: 600 }}>▼ 24.1% vs IMD operational (108 km)</span>
           </div>
         </div>
-        <div className="card p-3">
+        <div className="card p-3" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
           <div className="metric">
-            <span className="metric-label">T+24h Intensity MAE</span>
-            <span className="metric-value text-green">7.4 kt</span>
-            <span style={{ fontSize: '0.65rem', color: 'var(--accent-green)' }}>▼ 24.5% vs IMD baseline (9.8 kt)</span>
+            <span className="metric-label" style={{ color: '#16A34A' }}>T+24h Intensity MAE</span>
+            <span className="metric-value" style={{ color: '#16A34A', fontSize: '1.5rem' }}>7.4 kt</span>
+            <span style={{ fontSize: '0.68rem', color: '#16A34A', fontWeight: 600 }}>▼ 24.5% vs IMD baseline (9.8 kt)</span>
           </div>
         </div>
-        <div className="card p-3">
+        <div className="card p-3" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
           <div className="metric">
-            <span className="metric-label">RI Detection (POD)</span>
-            <span className="metric-value text-red">85.7%</span>
-            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Probability of Detection (≥30kt/24h)</span>
+            <span className="metric-label" style={{ color: '#0EA5E9' }}>RI Detection (POD)</span>
+            <span className="metric-value" style={{ color: '#0EA5E9', fontSize: '1.5rem' }}>85.7%</span>
+            <span style={{ fontSize: '0.68rem', color: '#64748B' }}>Probability of Detection (≥30kt/24h)</span>
           </div>
         </div>
-        <div className="card p-3">
+        <div className="card p-3" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
           <div className="metric">
-            <span className="metric-label">Landfall Location Error</span>
-            <span className="metric-value text-cyan">23.5 km</span>
-            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Average cross-coast landfall accuracy</span>
+            <span className="metric-label" style={{ color: '#8B5CF6' }}>Landfall Location Error</span>
+            <span className="metric-value" style={{ color: '#8B5CF6', fontSize: '1.5rem' }}>23.5 km</span>
+            <span style={{ fontSize: '0.68rem', color: '#64748B' }}>Average cross-coast landfall accuracy</span>
           </div>
         </div>
       </div>
 
       {/* Charts Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '1rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '1.25rem' }}>
         {/* Track Error Chart */}
-        <div className="card p-3">
-          <div className="card-header">
-            <h4 style={{ margin: 0, fontSize: '0.85rem' }}>📍 Track Position Error vs Lead Time</h4>
-            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Lower is better (km)</span>
+        <div className="card p-3" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
+          <div className="card-header" style={{ padding: '0.6rem 0.85rem' }}>
+            <h4 style={{ margin: 0, fontSize: '0.88rem', fontWeight: 700, color: '#0F172A' }}>
+              📍 Track Position Error vs Lead Time
+            </h4>
+            <span style={{ fontSize: '0.68rem', color: '#64748B', fontWeight: 500 }}>Lower is better (km)</span>
           </div>
-          <div style={{ marginTop: '0.75rem' }}>
+          <div style={{ marginTop: '0.75rem', background: '#FFFFFF', padding: '0.5rem' }}>
             <svg viewBox="0 0 400 180" style={{ width: '100%', height: '180px' }}>
+              {/* Background canvas */}
+              <rect x="35" y="10" width="355" height="145" fill="#F8FAFC" rx="4" />
+
               {/* Grid lines */}
               {[0, 100, 200, 300].map(val => {
                 const y = 150 - (val / 320) * 130;
                 return (
                   <g key={val}>
-                    <line x1="40" y1={y} x2="380" y2={y} stroke="var(--border-default)" strokeDasharray="3 3" />
-                    <text x="32" y={y + 3} fill="var(--text-muted)" fontSize="8" textAnchor="end">{val}</text>
+                    <line x1="40" y1={y} x2="380" y2={y} stroke="#E2E8F0" strokeDasharray="3 3" strokeWidth="0.8" />
+                    <text x="32" y={y + 3} fill="#64748B" fontSize="8" fontWeight="600" textAnchor="end">{val}</text>
                   </g>
                 );
               })}
@@ -107,58 +139,63 @@ export function ValidationBacktest() {
               <polyline
                 points={leadTimeErrors.map((d, i) => `${60 + i * 55},${150 - (d.imdTrack / 320) * 130}`).join(' ')}
                 fill="none"
-                stroke="var(--accent-orange)"
+                stroke="#F97316"
                 strokeWidth="2.5"
                 strokeDasharray="4 3"
               />
               {leadTimeErrors.map((d, i) => (
-                <circle key={'imd' + i} cx={60 + i * 55} cy={150 - (d.imdTrack / 320) * 130} r="3" fill="var(--accent-orange)" />
+                <circle key={'imd' + i} cx={60 + i * 55} cy={150 - (d.imdTrack / 320) * 130} r="3.5" fill="#F97316" stroke="#FFFFFF" strokeWidth="1" />
               ))}
 
               {/* Our In-House Deep Learning Model (Blue) */}
               <polyline
                 points={leadTimeErrors.map((d, i) => `${60 + i * 55},${150 - (d.ourTrack / 320) * 130}`).join(' ')}
                 fill="none"
-                stroke="var(--accent-blue)"
+                stroke="#2563EB"
                 strokeWidth="3"
               />
               {leadTimeErrors.map((d, i) => (
                 <g key={'our' + i}>
-                  <circle cx={60 + i * 55} cy={150 - (d.ourTrack / 320) * 130} r="4" fill="var(--accent-blue)" />
-                  <text x={60 + i * 55} y={150 - (d.ourTrack / 320) * 130 - 8} fill="var(--accent-blue)" fontSize="8" textAnchor="middle" fontWeight="bold">
+                  <circle cx={60 + i * 55} cy={150 - (d.ourTrack / 320) * 130} r="4.5" fill="#2563EB" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <text x={60 + i * 55} y={150 - (d.ourTrack / 320) * 130 - 8} fill="#2563EB" fontSize="8" textAnchor="middle" fontWeight="bold">
                     {d.ourTrack}
                   </text>
-                  <text x={60 + i * 55} y="165" fill="var(--text-secondary)" fontSize="8" textAnchor="middle">
+                  <text x={60 + i * 55} y="165" fill="#64748B" fontSize="8" fontWeight="600" textAnchor="middle">
                     T+{d.lead}h
                   </text>
                 </g>
               ))}
             </svg>
-            <div className="flex justify-center gap-4" style={{ fontSize: '0.7rem', marginTop: '0.25rem' }}>
-              <span className="flex items-center gap-1">
-                <span style={{ width: 12, height: 3, background: 'var(--accent-blue)' }} /> In-House ConvLSTM Ensemble
+            <div className="flex justify-center gap-4" style={{ fontSize: '0.72rem', marginTop: '0.4rem' }}>
+              <span className="flex items-center gap-1.5" style={{ color: '#0F172A', fontWeight: 600 }}>
+                <span style={{ width: 12, height: 3, background: '#2563EB', borderRadius: '1px' }} /> In-House ConvLSTM Ensemble
               </span>
-              <span className="flex items-center gap-1">
-                <span style={{ width: 12, height: 3, background: 'var(--accent-orange)', borderBottom: '2px dashed' }} /> IMD Official Operational Baseline
+              <span className="flex items-center gap-1.5" style={{ color: '#64748B', fontWeight: 500 }}>
+                <span style={{ width: 12, height: 3, background: '#F97316', borderRadius: '1px' }} /> IMD Operational Baseline
               </span>
             </div>
           </div>
         </div>
 
         {/* Intensity MAE Chart */}
-        <div className="card p-3">
-          <div className="card-header">
-            <h4 style={{ margin: 0, fontSize: '0.85rem' }}>⚡ Maximum Wind Intensity MAE</h4>
-            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Lower is better (knots)</span>
+        <div className="card p-3" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
+          <div className="card-header" style={{ padding: '0.6rem 0.85rem' }}>
+            <h4 style={{ margin: 0, fontSize: '0.88rem', fontWeight: 700, color: '#0F172A' }}>
+              ⚡ Maximum Wind Intensity MAE
+            </h4>
+            <span style={{ fontSize: '0.68rem', color: '#64748B', fontWeight: 500 }}>Lower is better (knots)</span>
           </div>
-          <div style={{ marginTop: '0.75rem' }}>
+          <div style={{ marginTop: '0.75rem', background: '#FFFFFF', padding: '0.5rem' }}>
             <svg viewBox="0 0 400 180" style={{ width: '100%', height: '180px' }}>
+              {/* Background canvas */}
+              <rect x="35" y="10" width="355" height="145" fill="#F8FAFC" rx="4" />
+
               {[0, 5, 10, 15, 20].map(val => {
                 const y = 150 - (val / 22) * 130;
                 return (
                   <g key={val}>
-                    <line x1="40" y1={y} x2="380" y2={y} stroke="var(--border-default)" strokeDasharray="3 3" />
-                    <text x="32" y={y + 3} fill="var(--text-muted)" fontSize="8" textAnchor="end">{val} kt</text>
+                    <line x1="40" y1={y} x2="380" y2={y} stroke="#E2E8F0" strokeDasharray="3 3" strokeWidth="0.8" />
+                    <text x="32" y={y + 3} fill="#64748B" fontSize="8" fontWeight="600" textAnchor="end">{val} kt</text>
                   </g>
                 );
               })}
@@ -166,34 +203,34 @@ export function ValidationBacktest() {
               <polyline
                 points={leadTimeErrors.map((d, i) => `${60 + i * 55},${150 - (d.imdInt / 22) * 130}`).join(' ')}
                 fill="none"
-                stroke="var(--accent-yellow)"
+                stroke="#F59E0B"
                 strokeWidth="2.5"
                 strokeDasharray="4 3"
               />
               <polyline
                 points={leadTimeErrors.map((d, i) => `${60 + i * 55},${150 - (d.ourInt / 22) * 130}`).join(' ')}
                 fill="none"
-                stroke="var(--accent-green)"
+                stroke="#16A34A"
                 strokeWidth="3"
               />
               {leadTimeErrors.map((d, i) => (
                 <g key={'int' + i}>
-                  <circle cx={60 + i * 55} cy={150 - (d.ourInt / 22) * 130} r="4" fill="var(--accent-green)" />
-                  <text x={60 + i * 55} y={150 - (d.ourInt / 22) * 130 - 8} fill="var(--accent-green)" fontSize="8" textAnchor="middle" fontWeight="bold">
+                  <circle cx={60 + i * 55} cy={150 - (d.ourInt / 22) * 130} r="4.5" fill="#16A34A" stroke="#FFFFFF" strokeWidth="1.5" />
+                  <text x={60 + i * 55} y={150 - (d.ourInt / 22) * 130 - 8} fill="#16A34A" fontSize="8" textAnchor="middle" fontWeight="bold">
                     {d.ourInt}
                   </text>
-                  <text x={60 + i * 55} y="165" fill="var(--text-secondary)" fontSize="8" textAnchor="middle">
+                  <text x={60 + i * 55} y="165" fill="#64748B" fontSize="8" fontWeight="600" textAnchor="middle">
                     T+{d.lead}h
                   </text>
                 </g>
               ))}
             </svg>
-            <div className="flex justify-center gap-4" style={{ fontSize: '0.7rem', marginTop: '0.25rem' }}>
-              <span className="flex items-center gap-1">
-                <span style={{ width: 12, height: 3, background: 'var(--accent-green)' }} /> In-House Hybrid ResNet+GBDT
+            <div className="flex justify-center gap-4" style={{ fontSize: '0.72rem', marginTop: '0.4rem' }}>
+              <span className="flex items-center gap-1.5" style={{ color: '#0F172A', fontWeight: 600 }}>
+                <span style={{ width: 12, height: 3, background: '#16A34A', borderRadius: '1px' }} /> In-House Hybrid ResNet+GBDT
               </span>
-              <span className="flex items-center gap-1">
-                <span style={{ width: 12, height: 3, background: 'var(--accent-yellow)', borderBottom: '2px dashed' }} /> IMD Numerical NWP Guidance
+              <span className="flex items-center gap-1.5" style={{ color: '#64748B', fontWeight: 500 }}>
+                <span style={{ width: 12, height: 3, background: '#F59E0B', borderRadius: '1px' }} /> IMD Numerical NWP Guidance
               </span>
             </div>
           </div>
@@ -201,10 +238,14 @@ export function ValidationBacktest() {
       </div>
 
       {/* Historical Cyclone Backtest Breakdown */}
-      <div className="card">
+      <div className="card" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
         <div className="card-header">
-          <h4 style={{ margin: 0, fontSize: '0.85rem' }}>📋 Benchmark Results on Landmark North Indian Ocean Storms</h4>
-          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Tested against official post-season IMD Best Track archives</span>
+          <h4 style={{ margin: 0, fontSize: '0.88rem', fontWeight: 700, color: '#0F172A' }}>
+            📋 Benchmark Results on Landmark North Indian Ocean Storms
+          </h4>
+          <span style={{ fontSize: '0.68rem', color: '#64748B', fontWeight: 500 }}>
+            Tested against official post-season IMD Best Track archives
+          </span>
         </div>
         <div className="card-body p-0" style={{ overflow: 'auto' }}>
           <table className="data-table">
@@ -223,31 +264,33 @@ export function ValidationBacktest() {
             <tbody>
               {EVAL_DATA.map((row) => (
                 <tr key={row.name}>
-                  <td style={{ fontWeight: 600 }}>{row.name}</td>
-                  <td style={{ fontFamily: 'var(--font-mono)' }}>{row.year}</td>
+                  <td style={{ fontWeight: 700, color: '#0F172A' }}>{row.name}</td>
+                  <td style={{ fontFamily: 'var(--font-mono)', color: '#475569' }}>{row.year}</td>
                   <td>{row.basin === 'BOB' ? '🌊 Bay of Bengal' : '🌊 Arabian Sea'}</td>
-                  <td style={{ fontFamily: 'var(--font-mono)', color: row.landfallErrorKm < 25 ? 'var(--accent-green)' : 'var(--accent-yellow)' }}>
+                  <td style={{ fontFamily: 'var(--font-mono)', color: row.landfallErrorKm < 25 ? '#16A34A' : '#D97706', fontWeight: 700 }}>
                     {row.landfallErrorKm} km
                   </td>
-                  <td style={{ fontFamily: 'var(--font-mono)' }}>
+                  <td style={{ fontFamily: 'var(--font-mono)', color: '#0F172A' }}>
                     {row.timingErrorHours > 0 ? `+${row.timingErrorHours}h` : `${row.timingErrorHours}h`}
                   </td>
-                  <td style={{ fontFamily: 'var(--font-mono)' }}>
+                  <td style={{ fontFamily: 'var(--font-mono)', color: '#0F172A' }}>
                     {row.intensityErrorKt > 0 ? `+${row.intensityErrorKt}` : row.intensityErrorKt} kt
                   </td>
                   <td>
                     {row.riActual ? (
-                      <span className="badge badge-alert" style={{ fontSize: '0.6rem' }}>
+                      <span className="badge" style={{ fontSize: '0.65rem', background: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA', fontWeight: 700 }}>
                         RI Verified (POD: Hit)
                       </span>
                     ) : (
-                      <span className="badge" style={{ fontSize: '0.6rem', background: 'var(--bg-tertiary)', color: 'var(--text-muted)' }}>
+                      <span className="badge" style={{ fontSize: '0.65rem', background: '#F1F5F9', color: '#64748B', border: '1px solid #CBD5E1', fontWeight: 600 }}>
                         No RI
                       </span>
                     )}
                   </td>
                   <td>
-                    <span className="badge badge-live" style={{ fontSize: '0.6rem' }}>PASSED</span>
+                    <span className="badge" style={{ fontSize: '0.65rem', background: '#F0FDF4', color: '#16A34A', border: '1px solid #BBF7D0', fontWeight: 700 }}>
+                      PASSED
+                    </span>
                   </td>
                 </tr>
               ))}
@@ -257,52 +300,58 @@ export function ValidationBacktest() {
       </div>
 
       {/* RI Confusion Matrix & Physics Consistency */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1rem' }}>
-        <div className="card p-3">
-          <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.85rem' }}>🧮 Rapid Intensification Confusion Matrix</h4>
-          <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Criteria: ΔVmax ≥ 30 kt within 24 hours (N=42 storms)</p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: '0.5rem' }}>
-            <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid var(--accent-green)', borderRadius: 'var(--radius-sm)', padding: '0.75rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--accent-green)' }}>12</div>
-              <div style={{ fontSize: '0.65rem', color: 'var(--text-secondary)' }}>True Positives (Hits)</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.25rem' }}>
+        <div className="card p-3" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
+          <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '0.88rem', fontWeight: 700, color: '#0F172A' }}>
+            🧮 Rapid Intensification Confusion Matrix
+          </h4>
+          <p style={{ fontSize: '0.72rem', color: '#64748B', margin: '0 0 0.65rem 0' }}>
+            Criteria: ΔVmax ≥ 30 kt within 24 hours (N=42 storms)
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+            <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: '8px', padding: '0.75rem', textAlign: 'center' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#16A34A' }}>12</div>
+              <div style={{ fontSize: '0.68rem', color: '#15803D', fontWeight: 600 }}>True Positives (Hits)</div>
             </div>
-            <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid var(--accent-red)', borderRadius: 'var(--radius-sm)', padding: '0.75rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--accent-red)' }}>2</div>
-              <div style={{ fontSize: '0.65rem', color: 'var(--text-secondary)' }}>False Alarms (Type I)</div>
+            <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '8px', padding: '0.75rem', textAlign: 'center' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#DC2626' }}>2</div>
+              <div style={{ fontSize: '0.68rem', color: '#B91C1C', fontWeight: 600 }}>False Alarms (Type I)</div>
             </div>
-            <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid var(--accent-yellow)', borderRadius: 'var(--radius-sm)', padding: '0.75rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--accent-yellow)' }}>2</div>
-              <div style={{ fontSize: '0.65rem', color: 'var(--text-secondary)' }}>Misses (Type II)</div>
+            <div style={{ background: '#FFFBEB', border: '1px solid #FDE68A', borderRadius: '8px', padding: '0.75rem', textAlign: 'center' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#D97706' }}>2</div>
+              <div style={{ fontSize: '0.68rem', color: '#B45309', fontWeight: 600 }}>Misses (Type II)</div>
             </div>
-            <div style={{ background: 'rgba(59, 130, 246, 0.1)', border: '1px solid var(--accent-blue)', borderRadius: 'var(--radius-sm)', padding: '0.75rem', textAlign: 'center' }}>
-              <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--accent-blue)' }}>26</div>
-              <div style={{ fontSize: '0.65rem', color: 'var(--text-secondary)' }}>True Negatives</div>
+            <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: '8px', padding: '0.75rem', textAlign: 'center' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#2563EB' }}>26</div>
+              <div style={{ fontSize: '0.68rem', color: '#1D4ED8', fontWeight: 600 }}>True Negatives</div>
             </div>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', marginTop: '0.75rem', color: 'var(--text-secondary)' }}>
-            <span>Critical Success Index (CSI): <strong>0.75</strong></span>
-            <span>False Alarm Ratio (FAR): <strong>14.3%</strong></span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', marginTop: '0.75rem', color: '#475569' }}>
+            <span>Critical Success Index (CSI): <strong style={{ color: '#0F172A' }}>0.75</strong></span>
+            <span>False Alarm Ratio (FAR): <strong style={{ color: '#0F172A' }}>14.3%</strong></span>
           </div>
         </div>
 
-        <div className="card p-3">
-          <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '0.85rem' }}>⚖️ Physical Plausibility & Mass Conservation Audit</h4>
-          <div className="flex-col gap-2" style={{ fontSize: '0.75rem', marginTop: '0.5rem' }}>
-            <div className="flex items-center justify-between" style={{ padding: '0.35rem 0.5rem', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-sm)' }}>
-              <span>Holland Vortex Wind-Pressure Consistency</span>
-              <span className="badge badge-live">100% compliant</span>
+        <div className="card p-3" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
+          <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '0.88rem', fontWeight: 700, color: '#0F172A' }}>
+            ⚖️ Physical Plausibility & Mass Conservation Audit
+          </h4>
+          <div className="flex-col gap-2" style={{ fontSize: '0.78rem', marginTop: '0.65rem' }}>
+            <div className="flex items-center justify-between" style={{ padding: '0.45rem 0.65rem', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px' }}>
+              <span style={{ fontWeight: 500, color: '#0F172A' }}>Holland Vortex Wind-Pressure Consistency</span>
+              <span className="badge" style={{ background: '#F0FDF4', color: '#16A34A', border: '1px solid #BBF7D0', fontWeight: 700 }}>100% compliant</span>
             </div>
-            <div className="flex items-center justify-between" style={{ padding: '0.35rem 0.5rem', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-sm)' }}>
-              <span>Kaplan-DeMaria Land Decay Adherence</span>
-              <span className="badge badge-live">R² = 0.94</span>
+            <div className="flex items-center justify-between" style={{ padding: '0.45rem 0.65rem', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px' }}>
+              <span style={{ fontWeight: 500, color: '#0F172A' }}>Kaplan-DeMaria Land Decay Adherence</span>
+              <span className="badge" style={{ background: '#F0FDF4', color: '#16A34A', border: '1px solid #BBF7D0', fontWeight: 700 }}>R² = 0.94</span>
             </div>
-            <div className="flex items-center justify-between" style={{ padding: '0.35rem 0.5rem', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-sm)' }}>
-              <span>Coriolis Acceleration Dynamic Steering Check</span>
-              <span className="badge badge-live">Passed</span>
+            <div className="flex items-center justify-between" style={{ padding: '0.45rem 0.65rem', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px' }}>
+              <span style={{ fontWeight: 500, color: '#0F172A' }}>Coriolis Acceleration Dynamic Steering Check</span>
+              <span className="badge" style={{ background: '#F0FDF4', color: '#16A34A', border: '1px solid #BBF7D0', fontWeight: 700 }}>Passed</span>
             </div>
-            <div className="flex items-center justify-between" style={{ padding: '0.35rem 0.5rem', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-sm)' }}>
-              <span>Zero-Gradient Eye Boundary Condition</span>
-              <span className="badge badge-live">Enforced</span>
+            <div className="flex items-center justify-between" style={{ padding: '0.45rem 0.65rem', background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px' }}>
+              <span style={{ fontWeight: 500, color: '#0F172A' }}>Zero-Gradient Eye Boundary Condition</span>
+              <span className="badge" style={{ background: '#F0FDF4', color: '#16A34A', border: '1px solid #BBF7D0', fontWeight: 700 }}>Enforced</span>
             </div>
           </div>
         </div>

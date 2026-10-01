@@ -7,6 +7,7 @@ interface TopBarProps {
   demoMode: boolean;
   activeStorm: Storm | null;
   onSelectStorm?: (stormId: string) => void;
+  onOpenDisclaimer?: () => void;
 }
 
 const NAV_ITEMS = [
@@ -24,29 +25,75 @@ export function TopBar({
   demoMode,
   activeStorm,
   onSelectStorm,
+  onOpenDisclaimer,
 }: TopBarProps) {
   return (
-    <header className="top-bar" style={{ flexWrap: 'wrap', gap: '0.5rem', padding: '0.4rem 1rem' }}>
-      <div className="flex items-center gap-3">
+    <header
+      className="top-bar"
+      style={{
+        height: '64px',
+        minHeight: '64px',
+        backgroundColor: '#FFFFFF',
+        border: '1px solid #E2E8F0',
+        borderRadius: '12px',
+        boxShadow: '0 1px 3px rgba(15, 23, 42, 0.05)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 1.25rem',
+        gap: '0.75rem',
+        flexShrink: 0,
+      }}
+    >
+      <div className="flex items-center gap-3" style={{ display: 'flex', alignItems: 'center' }}>
         {/* Logo / Title */}
         <div
           className="flex items-center gap-2"
-          style={{ cursor: 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
           onClick={() => onPageChange('dashboard')}
         >
-          <span style={{ fontSize: '1.25rem' }}>🌀</span>
-          <h1 style={{ fontSize: '0.95rem', fontWeight: 700, letterSpacing: '-0.01em', margin: 0 }}>
+          <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>🌀</span>
+          <h1 style={{ fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.01em', margin: 0, color: '#0F172A', lineHeight: 1.2 }}>
             IMD Cyclone Detector
           </h1>
         </div>
 
         {activeStorm?.status === 'ACTIVE' ? (
-          <span className="badge badge-alert" style={{ background: 'rgba(239, 68, 68, 0.2)', border: '1px solid var(--accent-red)', color: 'var(--accent-red)' }}>
-            <span style={{ fontSize: '0.6rem', animation: 'pulse 1s infinite' }}>●</span>
+          <span
+            className="badge"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              background: '#FEF2F2',
+              border: '1px solid #FECACA',
+              color: '#EF4444',
+              fontWeight: 700,
+              fontSize: '0.72rem',
+              padding: '0.25rem 0.65rem',
+              borderRadius: '9999px',
+            }}
+          >
+            <span style={{ fontSize: '0.6rem', color: '#EF4444', animation: 'pulse 1s infinite' }}>●</span>
             LIVE DETECTED
           </span>
         ) : (
-          <span className="badge badge-demo" title="Replaying historical North Indian Ocean cyclones">
+          <span
+            className="badge"
+            title="Replaying historical North Indian Ocean cyclones"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              background: '#EFF6FF',
+              border: '1px solid #DBEAFE',
+              color: '#2563EB',
+              fontWeight: 600,
+              fontSize: '0.72rem',
+              padding: '0.25rem 0.65rem',
+              borderRadius: '9999px',
+            }}
+          >
             <span style={{ fontSize: '0.6rem' }}>●</span>
             REPLAY ARCHIVE
           </span>
@@ -58,14 +105,19 @@ export function TopBar({
             value={activeStorm.storm_id}
             onChange={(e) => onSelectStorm(e.target.value)}
             style={{
-              padding: '0.3rem 0.6rem',
-              background: 'var(--bg-card)',
-              border: activeStorm.status === 'ACTIVE' ? '1px solid var(--accent-red)' : '1px solid var(--accent-blue)',
-              borderRadius: 'var(--radius-sm)',
-              color: 'var(--text-primary)',
-              fontSize: '0.75rem',
+              height: '34px',
+              padding: '0 0.75rem',
+              background: '#FFFFFF',
+              border: activeStorm.status === 'ACTIVE' ? '1px solid #FECACA' : '1px solid #CBD5E1',
+              borderRadius: '8px',
+              color: '#0F172A',
+              fontSize: '0.78rem',
               fontWeight: 600,
               cursor: 'pointer',
+              boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
+              outline: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
             }}
           >
             <optgroup label="🔴 Real-Time / Genesis Monitoring">
@@ -84,50 +136,101 @@ export function TopBar({
         )}
 
         {activeStorm?.ri_alert && (
-          <span className="badge badge-alert" style={{ animation: 'pulse 2s infinite' }}>
+          <span
+            className="badge badge-alert"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              background: '#FEF2F2',
+              color: '#EF4444',
+              border: '1px solid #FECACA',
+              fontWeight: 700,
+              animation: 'pulse 2s infinite',
+            }}
+          >
             ⚠ RI ALERT (Rapid Intensification)
           </span>
         )}
       </div>
 
       {/* Navigation */}
-      <nav className="flex items-center gap-1" style={{ flexWrap: 'wrap' }}>
-        {NAV_ITEMS.map(({ key, label, icon }) => (
-          <button
-            key={key}
-            className={`btn btn-sm ${currentPage === key ? 'btn-primary' : 'btn-ghost'}`}
-            onClick={() => onPageChange(key)}
-            style={{ fontSize: '0.75rem', padding: '0.3rem 0.55rem' }}
-          >
-            <span>{icon}</span>
-            <span className="nav-label">{label}</span>
-          </button>
-        ))}
-      </nav>
-
-      {/* Status */}
-      <div className="flex items-center gap-2" style={{ fontSize: '0.7rem' }}>
-        {activeStorm && (
-          <div className="flex items-center gap-2">
-            <span
-              className="cat-badge"
+      <nav className="flex items-center gap-1.5" style={{ display: 'flex', alignItems: 'center' }}>
+        {NAV_ITEMS.map(({ key, label, icon }) => {
+          const isActive = currentPage === key;
+          return (
+            <button
+              key={key}
+              onClick={() => onPageChange(key)}
               style={{
-                borderColor: activeStorm.category_color + '60',
-                color: activeStorm.category_color,
-                background: activeStorm.category_color + '15',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                fontSize: '0.78rem',
+                fontWeight: isActive ? 600 : 500,
+                padding: '0.4rem 0.75rem',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                transition: 'all 150ms ease',
+                background: isActive ? '#2563EB' : '#FFFFFF',
+                color: isActive ? '#FFFFFF' : '#1E3A5F',
+                border: isActive ? '1px solid #2563EB' : '1px solid #E2E8F0',
+                boxShadow: isActive ? '0 1px 3px rgba(37, 99, 235, 0.25)' : 'none',
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.backgroundColor = '#EFF6FF';
+                  e.currentTarget.style.color = '#2563EB';
+                  e.currentTarget.style.borderColor = '#BFDBFE';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.backgroundColor = '#FFFFFF';
+                  e.currentTarget.style.color = '#1E3A5F';
+                  e.currentTarget.style.borderColor = '#E2E8F0';
+                }
               }}
             >
-              {activeStorm.category}
-            </span>
-            <span className="text-secondary" style={{ fontWeight: 600 }}>
-              {activeStorm.max_wind_kt} kt ({activeStorm.max_wind_kmh} km/h)
-            </span>
-          </div>
+              <span>{icon}</span>
+              <span className="nav-label">{label}</span>
+            </button>
+          );
+        })}
+
+        {/* AI Advisory / Scientific Safety Info Button */}
+        {onOpenDisclaimer && (
+          <button
+            onClick={onOpenDisclaimer}
+            title="Scientific Safety, Responsible AI & Data Advisory"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              padding: '0.4rem 0.7rem',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 150ms ease',
+              background: '#F0F9FF',
+              color: '#0EA5E9',
+              border: '1px solid #BAE6FD',
+              marginLeft: '0.25rem',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#E0F2FE';
+              e.currentTarget.style.borderColor = '#7DD3FC';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#F0F9FF';
+              e.currentTarget.style.borderColor = '#BAE6FD';
+            }}
+          >
+            <span style={{ fontSize: '0.85rem' }}>ⓘ</span>
+            <span>AI Advisory</span>
+          </button>
         )}
-        <span className="badge badge-live" style={{ fontSize: '0.6rem' }}>
-          <span>●</span> ACTIVE
-        </span>
-      </div>
+      </nav>
     </header>
   );
 }

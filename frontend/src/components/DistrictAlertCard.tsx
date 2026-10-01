@@ -66,15 +66,15 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
   const [dispatchResult, setDispatchResult] = useState<any>(null);
 
   // Status Badge definition
-  let statusBadge = { label: 'Safe', color: 'var(--accent-green)', bg: 'rgba(34, 197, 94, 0.15)', border: 'rgba(34, 197, 94, 0.4)' };
-  let progressColor = '#22c55e'; // Green < 40
+  let statusBadge = { label: 'Safe', color: '#16A34A', bg: '#F0FDF4', border: '#BBF7D0' };
+  let progressColor = '#22C55E'; // Green < 40
 
   if (data.vulnerabilityScore >= 75) {
-    statusBadge = { label: 'Evacuate', color: '#ef4444', bg: 'rgba(239, 68, 68, 0.25)', border: '#ef4444' };
-    progressColor = '#ef4444'; // Red > 75
+    statusBadge = { label: 'Evacuate', color: '#DC2626', bg: '#FEF2F2', border: '#FECACA' };
+    progressColor = '#EF4444'; // Red > 75
   } else if (data.vulnerabilityScore >= 40) {
-    statusBadge = { label: 'Warning', color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.2)', border: '#f59e0b' };
-    progressColor = '#f59e0b'; // Yellow 40-75
+    statusBadge = { label: 'Warning', color: '#D97706', bg: '#FFFBEB', border: '#FDE68A' };
+    progressColor = '#F59E0B'; // Yellow 40-75
   }
 
   const isThresholdTriggered = data.vulnerabilityScore >= 80;
@@ -102,11 +102,10 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
         width: '380px',
         maxHeight: 'calc(100% - 32px)',
         zIndex: 50,
-        background: 'rgba(11, 19, 36, 0.95)',
-        backdropFilter: 'blur(12px)',
-        border: `1px solid ${data.vulnerabilityScore >= 75 ? 'rgba(239, 68, 68, 0.5)' : 'var(--border-default)'}`,
-        boxShadow: data.vulnerabilityScore >= 75 ? '0 12px 36px rgba(239, 68, 68, 0.2)' : '0 12px 32px rgba(0, 0, 0, 0.5)',
-        borderRadius: 'var(--radius-md)',
+        background: '#FFFFFF',
+        border: `1px solid ${data.vulnerabilityScore >= 75 ? '#FECACA' : '#E2E8F0'}`,
+        boxShadow: data.vulnerabilityScore >= 75 ? '0 12px 36px rgba(239, 68, 68, 0.15)' : '0 12px 32px rgba(15, 23, 42, 0.12)',
+        borderRadius: '12px',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
@@ -117,20 +116,20 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
       <div
         style={{
           padding: '0.85rem 1rem',
-          borderBottom: '1px solid var(--border-default)',
+          borderBottom: '1px solid #E2E8F0',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: data.vulnerabilityScore >= 75 ? 'rgba(239, 68, 68, 0.1)' : 'transparent',
+          background: data.vulnerabilityScore >= 75 ? '#FFF5F5' : '#FFFFFF',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <span style={{ fontSize: '1.2rem' }}>🏛️</span>
           <div>
-            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#f8fafc' }}>
+            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: '#0F172A' }}>
               {data.districtName}
             </div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+            <div style={{ fontSize: '0.72rem', color: '#64748B' }}>
               {data.state} {data.isCoastal ? '• Coastal District' : '• Inland District'}
             </div>
           </div>
@@ -165,7 +164,7 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
             style={{
               background: 'transparent',
               border: 'none',
-              color: 'var(--text-muted)',
+              color: '#64748B',
               fontSize: '1.1rem',
               cursor: 'pointer',
               padding: '2px 6px',
@@ -183,23 +182,23 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
         {/* Vulnerability Score Gauge */}
         <div
           style={{
-            background: 'rgba(15, 23, 42, 0.6)',
-            border: '1px solid var(--border-default)',
-            borderRadius: 'var(--radius-sm)',
+            background: '#F8FAFC',
+            border: '1px solid #E2E8F0',
+            borderRadius: '8px',
             padding: '0.75rem',
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '6px' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#64748B' }}>
               Vulnerability Score
             </span>
             <span style={{ fontSize: '1.15rem', fontWeight: 800, color: progressColor }}>
-              {data.vulnerabilityScore} <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>/ 100</span>
+              {data.vulnerabilityScore} <span style={{ fontSize: '0.75rem', color: '#64748B' }}>/ 100</span>
             </span>
           </div>
 
           {/* Progress Bar with Color-Coded Range */}
-          <div style={{ width: '100%', height: '8px', background: '#1e293b', borderRadius: '4px', overflow: 'hidden' }}>
+          <div style={{ width: '100%', height: '8px', background: '#E2E8F0', borderRadius: '4px', overflow: 'hidden' }}>
             <div
               style={{
                 width: `${Math.min(100, Math.max(5, data.vulnerabilityScore))}%`,
@@ -210,7 +209,7 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
             />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '0.62rem', color: 'var(--text-muted)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4px', fontSize: '0.62rem', color: '#64748B' }}>
             <span>0 (Safe &lt;40)</span>
             <span>40 (Warning)</span>
             <span>75 (Evacuate &gt;75)</span>
@@ -228,52 +227,52 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
         >
           <div
             style={{
-              background: 'rgba(15, 23, 42, 0.5)',
-              border: '1px solid var(--border-default)',
-              padding: '0.5rem',
-              borderRadius: 'var(--radius-sm)',
+              background: '#F8FAFC',
+              border: '1px solid #E2E8F0',
+              padding: '0.55rem',
+              borderRadius: '8px',
               textAlign: 'center',
             }}
           >
-            <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Peak Wind</div>
-            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#f8fafc', marginTop: '2px' }}>
+            <div style={{ fontSize: '0.65rem', color: '#64748B', fontWeight: 600 }}>Peak Wind</div>
+            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>
               {data.windSpeedKmh} <span style={{ fontSize: '0.65rem' }}>km/h</span>
             </div>
-            <div style={{ fontSize: '0.6rem', color: 'var(--accent-blue)' }}>
+            <div style={{ fontSize: '0.62rem', color: '#2563EB', fontWeight: 600 }}>
               {Math.round(data.windSpeedKmh / 1.852)} kt
             </div>
           </div>
 
           <div
             style={{
-              background: 'rgba(15, 23, 42, 0.5)',
-              border: '1px solid var(--border-default)',
-              padding: '0.5rem',
-              borderRadius: 'var(--radius-sm)',
+              background: '#F8FAFC',
+              border: '1px solid #E2E8F0',
+              padding: '0.55rem',
+              borderRadius: '8px',
               textAlign: 'center',
             }}
           >
-            <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Rainfall</div>
-            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#38bdf8', marginTop: '2px' }}>
+            <div style={{ fontSize: '0.65rem', color: '#64748B', fontWeight: 600 }}>Rainfall</div>
+            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0284C7', marginTop: '2px' }}>
               {data.rainfallMm} <span style={{ fontSize: '0.65rem' }}>mm</span>
             </div>
-            <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>24h Peak</div>
+            <div style={{ fontSize: '0.62rem', color: '#64748B' }}>24h Peak</div>
           </div>
 
           <div
             style={{
-              background: 'rgba(15, 23, 42, 0.5)',
-              border: '1px solid var(--border-default)',
-              padding: '0.5rem',
-              borderRadius: 'var(--radius-sm)',
+              background: '#F8FAFC',
+              border: '1px solid #E2E8F0',
+              padding: '0.55rem',
+              borderRadius: '8px',
               textAlign: 'center',
             }}
           >
-            <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Arrival ETA</div>
-            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#f59e0b', marginTop: '2px' }}>
+            <div style={{ fontSize: '0.65rem', color: '#64748B', fontWeight: 600 }}>Arrival ETA</div>
+            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#D97706', marginTop: '2px' }}>
               {data.eta}
             </div>
-            <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>Gale Winds</div>
+            <div style={{ fontSize: '0.62rem', color: '#64748B' }}>Gale Winds</div>
           </div>
         </div>
 
@@ -281,18 +280,18 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
         {isThresholdTriggered && (
           <div
             style={{
-              background: 'rgba(239, 68, 68, 0.15)',
-              border: '1px solid rgba(239, 68, 68, 0.5)',
-              padding: '0.5rem 0.75rem',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '0.7rem',
-              color: '#fca5a5',
+              background: '#FEF2F2',
+              border: '1px solid #FECACA',
+              padding: '0.55rem 0.75rem',
+              borderRadius: '8px',
+              fontSize: '0.72rem',
+              color: '#991B1B',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
+              gap: '8px',
             }}
           >
-            <span style={{ fontSize: '1rem' }}>⚡</span>
+            <span style={{ fontSize: '1.1rem' }}>⚡</span>
             <div>
               <strong>Threshold Trigger Breached (Score ≥ 80):</strong>
               <div>Automated SMS alert dispatch activated for district administration and farmers.</div>
@@ -303,19 +302,19 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
         {/* Multi-Language Ready Template Preview */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-            <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#0F172A' }}>
               🌐 Multi-Language Alert Payload:
             </span>
             <select
               value={selectedLang}
               onChange={(e) => setSelectedLang(e.target.value)}
               style={{
-                fontSize: '0.68rem',
-                padding: '2px 6px',
-                background: '#1e293b',
-                color: '#f8fafc',
-                border: '1px solid var(--border-default)',
-                borderRadius: '4px',
+                fontSize: '0.7rem',
+                padding: '3px 8px',
+                background: '#FFFFFF',
+                color: '#0F172A',
+                border: '1px solid #CBD5E1',
+                borderRadius: '6px',
                 cursor: 'pointer',
               }}
             >
@@ -329,13 +328,13 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
 
           <div
             style={{
-              background: '#040b17',
-              border: '1px solid var(--border-default)',
-              padding: '0.6rem',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '0.72rem',
-              lineHeight: 1.4,
-              color: '#e2e8f0',
+              background: '#F8FAFC',
+              border: '1px solid #E2E8F0',
+              padding: '0.65rem',
+              borderRadius: '8px',
+              fontSize: '0.74rem',
+              lineHeight: 1.5,
+              color: '#0F172A',
               fontFamily: 'system-ui, -apple-system, sans-serif',
             }}
           >
@@ -345,8 +344,8 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
 
         {/* SMS Dispatch Configuration */}
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          <label style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Gateway:</label>
-          <div style={{ display: 'flex', gap: '4px', flex: 1 }}>
+          <label style={{ fontSize: '0.7rem', color: '#64748B', fontWeight: 600 }}>Gateway:</label>
+          <div style={{ display: 'flex', gap: '6px', flex: 1 }}>
             {(['Fast2SMS', 'Twilio', 'AWS_SNS'] as const).map((p) => (
               <button
                 key={p}
@@ -354,13 +353,15 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
                 onClick={() => setProvider(p)}
                 style={{
                   flex: 1,
-                  fontSize: '0.65rem',
-                  padding: '3px 4px',
-                  borderRadius: '4px',
-                  background: provider === p ? 'var(--accent-blue)' : '#1e293b',
-                  color: provider === p ? '#fff' : 'var(--text-muted)',
-                  border: '1px solid var(--border-default)',
+                  fontSize: '0.68rem',
+                  padding: '4px 6px',
+                  borderRadius: '6px',
+                  fontWeight: 600,
+                  background: provider === p ? '#2563EB' : '#FFFFFF',
+                  color: provider === p ? '#FFFFFF' : '#1E3A5F',
+                  border: `1px solid ${provider === p ? '#2563EB' : '#CBD5E1'}`,
                   cursor: 'pointer',
+                  transition: 'all 150ms ease',
                 }}
               >
                 {p}
@@ -375,15 +376,15 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
           disabled={sending}
           style={{
             width: '100%',
-            padding: '0.55rem',
-            background: data.vulnerabilityScore >= 75 ? 'linear-gradient(135deg, #ef4444, #b91c1c)' : 'var(--btn-primary-bg)',
-            color: '#ffffff',
+            padding: '0.6rem',
+            background: data.vulnerabilityScore >= 75 ? '#DC2626' : '#2563EB',
+            color: '#FFFFFF',
             border: 'none',
-            borderRadius: 'var(--radius-sm)',
-            fontSize: '0.78rem',
+            borderRadius: '8px',
+            fontSize: '0.8rem',
             fontWeight: 700,
             cursor: sending ? 'not-allowed' : 'pointer',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            boxShadow: '0 2px 8px rgba(37, 99, 235, 0.25)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -402,12 +403,12 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
         {dispatchResult && (
           <div
             style={{
-              padding: '0.5rem',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '0.68rem',
-              background: dispatchResult.error ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.15)',
-              border: `1px solid ${dispatchResult.error ? '#ef4444' : '#22c55e'}`,
-              color: dispatchResult.error ? '#fca5a5' : '#86efac',
+              padding: '0.6rem',
+              borderRadius: '8px',
+              fontSize: '0.72rem',
+              background: dispatchResult.error ? '#FEF2F2' : '#F0FDF4',
+              border: `1px solid ${dispatchResult.error ? '#FECACA' : '#BBF7D0'}`,
+              color: dispatchResult.error ? '#DC2626' : '#16A34A',
             }}
           >
             {dispatchResult.error ? (
@@ -415,7 +416,7 @@ export function DistrictAlertCard({ data, onClose, onSendSms }: DistrictAlertCar
             ) : (
               <div>
                 <div>✅ <strong>SMS Broadcast Dispatched!</strong></div>
-                <div style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                <div style={{ fontSize: '0.65rem', color: '#64748B', marginTop: '2px' }}>
                   Gateway: {dispatchResult.alert?.provider || provider} • ID: {dispatchResult.alert?.id || 'ALT-2026-LIVE'} • Status: DELIVERED
                 </div>
               </div>

@@ -364,32 +364,50 @@ export function Dashboard({ storm }: DashboardProps) {
       {/* Sidebar */}
       <aside className="sidebar">
         {/* Tab Switcher */}
-        <div className="flex" style={{ borderBottom: '1px solid var(--border-default)' }}>
+        <div
+          className="flex"
+          style={{
+            background: '#F9FAFB',
+            borderRadius: '10px',
+            padding: '4px',
+            marginBottom: '14px',
+            display: 'flex',
+          }}
+        >
           {[
             { key: 'storm' as const, label: '🌀 Storm' },
             { key: 'layers' as const, label: '🗂️ Layers' },
             { key: 'env' as const, label: '🌡️ Environment' },
-          ].map(tab => (
-            <button
-              key={tab.key}
-              className={`btn btn-sm ${sidebarTab === tab.key ? '' : 'btn-ghost'}`}
-              onClick={() => setSidebarTab(tab.key)}
-              style={{
-                flex: 1,
-                borderRadius: 0,
-                borderBottom: sidebarTab === tab.key ? '2px solid var(--accent-blue)' : '2px solid transparent',
-                background: sidebarTab === tab.key ? 'var(--bg-card)' : 'transparent',
-                color: sidebarTab === tab.key ? 'var(--text-primary)' : 'var(--text-muted)',
-              }}
-            >
-              {tab.label}
-            </button>
-          ))}
+          ].map(tab => {
+            const isActive = sidebarTab === tab.key;
+            return (
+              <button
+                key={tab.key}
+                className="btn btn-sm"
+                onClick={() => setSidebarTab(tab.key)}
+                style={{
+                  flex: 1,
+                  borderRadius: '7px',
+                  background: isActive ? '#FFFFFF' : 'transparent',
+                  color: isActive ? '#2563EB' : '#1E3A5F',
+                  fontWeight: isActive ? 600 : 500,
+                  fontSize: '0.78rem',
+                  padding: '0.45rem 0.5rem',
+                  border: 'none',
+                  boxShadow: isActive ? '0 1px 2px rgba(0, 0, 0, 0.06)' : 'none',
+                  cursor: 'pointer',
+                  transition: 'all 150ms ease',
+                }}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
         <div className="overflow-auto" style={{ flex: 1 }}>
           {sidebarTab === 'storm' && (
-            <div className="flex-col gap-3 p-3">
+            <div className="flex flex-col gap-3 p-3" style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <StormInfoCard storm={storm} />
               <LandfallCard storm={storm} />
             </div>
@@ -409,12 +427,14 @@ export function Dashboard({ storm }: DashboardProps) {
         {/* Data Status Bar */}
         <div
           style={{
-            padding: '0.5rem 0.75rem',
-            borderTop: '1px solid var(--border-default)',
-            fontSize: '0.65rem',
-            color: 'var(--text-muted)',
+            padding: '0.6rem 0.85rem',
+            borderTop: '1px solid #E2E8F0',
+            fontSize: '0.7rem',
+            color: '#64748B',
+            background: '#F8FAFC',
             display: 'flex',
             justifyContent: 'space-between',
+            fontWeight: 500,
           }}
         >
           <span>Source: {storm.source}</span>
@@ -423,7 +443,18 @@ export function Dashboard({ storm }: DashboardProps) {
       </aside>
 
       {/* Main Map Area */}
-      <div className="map-container" ref={mapContainerRef} style={{ display: 'flex', flexDirection: 'column' }}>
+      <div
+        className="map-container"
+        ref={mapContainerRef}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '1px solid #E2E8F0',
+          boxShadow: '0 1px 3px rgba(15, 23, 42, 0.05)',
+        }}
+      >
         <div
           style={{
             flex: 1,
@@ -776,8 +807,8 @@ export function Dashboard({ storm }: DashboardProps) {
 
             {/* Center Storm Label */}
             <g transform={`translate(${currentSvgPos.x}, ${currentSvgPos.y - 30})`}>
-              <rect x="-45" y="-12" width="90" height="18" fill="rgba(3, 7, 18, 0.85)" rx="4" stroke="var(--border-default)" strokeWidth="0.8" />
-              <text x="0" y="0" textAnchor="middle" fill="#f8fafc" fontSize="9" fontWeight="bold">
+              <rect x="-45" y="-12" width="90" height="18" fill="rgba(255, 255, 255, 0.95)" rx="4" stroke="#CBD5E1" strokeWidth="1" />
+              <text x="0" y="1" textAnchor="middle" fill="#0F172A" fontSize="9" fontWeight="700">
                 {storm.name} ({currentPoint.max_wind_kt} kt)
               </text>
             </g>
@@ -787,60 +818,32 @@ export function Dashboard({ storm }: DashboardProps) {
           <div
             style={{
               position: 'absolute',
-              top: 10,
-              left: 10,
-              background: 'var(--bg-glass)',
-              border: '1px solid var(--border-default)',
-              padding: '6px 12px',
-              borderRadius: 'var(--radius-sm)',
+              top: 12,
+              left: 12,
+              background: 'rgba(255, 255, 255, 0.95)',
+              border: '1px solid #E2E8F0',
+              padding: '6px 14px',
+              borderRadius: '8px',
               fontSize: '0.75rem',
               display: 'flex',
               flexDirection: 'column',
               gap: '2px',
+              boxShadow: '0 2px 8px rgba(15, 23, 42, 0.08)',
+              backdropFilter: 'blur(8px)',
             }}
           >
-            <div style={{ fontWeight: 'bold', color: 'var(--text-primary)' }}>
+            <div style={{ fontWeight: 700, color: '#0F172A' }}>
               🌀 {storm.name} • {storm.basin === 'BOB' ? 'Bay of Bengal' : 'Arabian Sea'}
             </div>
-            <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+            <div style={{ fontSize: '0.68rem', color: '#64748B', fontFamily: 'var(--font-mono)' }}>
               Position: {currentPoint.lat.toFixed(1)}°N, {currentPoint.lon.toFixed(1)}°E • MSLP: {currentPoint.mslp_hpa} hPa
             </div>
             {hoveredDistrict && (
-              <div style={{ fontSize: '0.68rem', color: '#60a5fa', fontWeight: 'bold' }}>
+              <div style={{ fontSize: '0.7rem', color: '#2563EB', fontWeight: 700 }}>
                 📍 {hoveredDistrict.name}, {hoveredDistrict.state}
               </div>
             )}
           </div>
-
-          {/* Automated Threshold Alert Indicator Banner */}
-          {autoAlertBanner && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 10,
-                left: '50%',
-                transform: 'translateX(-50%)',
-                background: 'rgba(239, 68, 68, 0.22)',
-                border: '1px solid #ef4444',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '9999px',
-                padding: '4px 14px',
-                fontSize: '0.72rem',
-                color: '#fecaca',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                zIndex: 40,
-                boxShadow: '0 4px 16px rgba(239, 68, 68, 0.3)',
-                animation: 'fadeIn 0.3s ease',
-              }}
-            >
-              <span style={{ fontSize: '0.85rem', animation: 'pulse 1s infinite' }}>🚨</span>
-              <span>
-                <strong>Threshold Auto-Alert:</strong> Score ≥ 80 breached for <strong>{autoAlertBanner.names.join(', ')}</strong> • SMS Automation Active
-              </span>
-            </div>
-          )}
 
           {/* Persistent Floating District Alert Card */}
           {selectedDistrictAlert && (
@@ -856,105 +859,156 @@ export function Dashboard({ storm }: DashboardProps) {
             <div
               style={{
                 position: 'absolute',
-                top: 10,
-                right: 10,
-                background: 'var(--bg-glass)',
-                border: '1px solid var(--border-default)',
-                padding: '4px 8px',
-                borderRadius: 'var(--radius-sm)',
-                fontSize: '0.7rem',
+                top: 12,
+                right: 12,
+                background: 'rgba(255, 255, 255, 0.95)',
+                border: '1px solid #E2E8F0',
+                padding: '5px 10px',
+                borderRadius: '8px',
+                fontSize: '0.72rem',
                 fontFamily: 'var(--font-mono)',
-                color: 'var(--text-secondary)',
+                color: '#475569',
+                boxShadow: '0 2px 8px rgba(15, 23, 42, 0.08)',
+                backdropFilter: 'blur(8px)',
               }}
             >
               {cursorCoords.lat.toFixed(2)}°N, {cursorCoords.lon.toFixed(2)}°E
             </div>
           )}
 
-          {/* Map Legends bar */}
+          {/* Map Legends bar – Wind Radii + Track Type Legend (Prompt E, G) */}
           <div
             style={{
               position: 'absolute',
               bottom: 12,
               left: 12,
-              background: 'var(--bg-glass)',
-              border: '1px solid var(--border-default)',
-              padding: '4px 8px',
-              borderRadius: 'var(--radius-sm)',
-              fontSize: '0.65rem',
+              background: 'rgba(255, 255, 255, 0.95)',
+              border: '1px solid #E2E8F0',
+              padding: '6px 12px',
+              borderRadius: '8px',
+              fontSize: '0.68rem',
               display: 'flex',
-              gap: '12px',
-              alignItems: 'center',
+              flexDirection: 'column',
+              gap: '5px',
+              boxShadow: '0 2px 8px rgba(15, 23, 42, 0.08)',
+              backdropFilter: 'blur(8px)',
+              color: '#0F172A',
             }}
           >
-            <span className="flex items-center gap-1">
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent-red)' }} /> R64 (≥64kt)
-            </span>
-            <span className="flex items-center gap-1">
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent-yellow)' }} /> R50 (≥50kt)
-            </span>
-            <span className="flex items-center gap-1">
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent-green)' }} /> R34 (≥34kt)
-            </span>
-            <span className="text-muted">| Scale: ~100 km</span>
+            {/* Wind Radii row */}
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <span style={{ fontWeight: 700, color: '#475569', fontSize: '0.65rem', letterSpacing: '0.03em' }}>WIND RADII</span>
+              <span className="flex items-center gap-1.5" style={{ fontWeight: 600 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#EF4444', display: 'inline-block' }} /> R64 (≥64kt)
+              </span>
+              <span className="flex items-center gap-1.5" style={{ fontWeight: 600 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#F59E0B', display: 'inline-block' }} /> R50 (≥50kt)
+              </span>
+              <span className="flex items-center gap-1.5" style={{ fontWeight: 600 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22C55E', display: 'inline-block' }} /> R34 (≥34kt)
+              </span>
+              <span style={{ color: '#64748B' }}>| ~100 km</span>
+            </div>
+            {/* Track type row (Prompt E) */}
+            <div style={{ display: 'flex', gap: '14px', alignItems: 'center', borderTop: '1px dashed #E2E8F0', paddingTop: '4px' }}>
+              <span style={{ fontWeight: 700, color: '#475569', fontSize: '0.65rem', letterSpacing: '0.03em' }}>TRACK TYPE</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontWeight: 600, fontSize: '0.68rem' }}>
+                <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="#0EA5E9" strokeWidth="2.5" /></svg>
+                Observed / Best-Track
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontWeight: 600, fontSize: '0.68rem' }}>
+                <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="#3B82F6" strokeWidth="2" strokeDasharray="4 3" /></svg>
+                Forecast (AI Model)
+              </span>
+              <span style={{ color: '#94A3B8', fontSize: '0.63rem', fontStyle: 'italic' }}>Replay Archive – not live data</span>
+            </div>
           </div>
         </div>
 
         {/* Interactive Time Slider / Timeline Scrubber Bar */}
         <div
           style={{
-            background: 'var(--bg-card)',
-            borderTop: '1px solid var(--border-default)',
-            padding: '0.5rem 1rem',
+            background: '#FFFFFF',
+            borderTop: '1px solid #E2E8F0',
+            padding: '0.6rem 1.25rem',
             display: 'flex',
             alignItems: 'center',
             gap: '1rem',
+            boxShadow: '0 -2px 6px rgba(15, 23, 42, 0.03)',
           }}
         >
           {/* Play/Pause button */}
           <button
-            className="btn btn-sm btn-primary"
-            style={{ width: '70px', padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
+            className="btn btn-sm"
+            style={{
+              width: '75px',
+              padding: '0.35rem 0.6rem',
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              background: '#2563EB',
+              color: '#FFFFFF',
+              border: '1px solid #2563EB',
+              borderRadius: '8px',
+            }}
             onClick={() => setIsPlaying(!isPlaying)}
           >
             {isPlaying ? '⏸ Pause' : '▶ Play'}
           </button>
 
           {/* Lead times step buttons */}
-          <div className="flex items-center gap-1" style={{ flex: 1, overflowX: 'auto' }}>
-            {[0, 6, 12, 18, 24, 36, 48, 60, 72].map(lead => (
-              <button
-                key={lead}
-                className={`btn btn-sm ${leadHours === lead ? 'btn-primary' : 'btn-ghost'}`}
-                style={{
-                  fontSize: '0.7rem',
-                  padding: '0.2rem 0.45rem',
-                  fontFamily: 'var(--font-mono)',
-                  minWidth: '46px',
-                }}
-                onClick={() => {
-                  setLeadHours(lead);
-                  setIsPlaying(false);
-                }}
-              >
-                {lead === 0 ? 'Now' : `+${lead}h`}
-              </button>
-            ))}
+          <div className="flex items-center gap-1.5" style={{ flex: 1, overflowX: 'auto' }}>
+            {[0, 6, 12, 18, 24, 36, 48, 60, 72].map(lead => {
+              const isSelected = leadHours === lead;
+              return (
+                <button
+                  key={lead}
+                  className="btn btn-sm"
+                  style={{
+                    fontSize: '0.72rem',
+                    padding: '0.25rem 0.55rem',
+                    fontFamily: 'var(--font-mono)',
+                    minWidth: '48px',
+                    fontWeight: isSelected ? 700 : 500,
+                    background: isSelected ? '#2563EB' : '#FFFFFF',
+                    color: isSelected ? '#FFFFFF' : '#1E3A5F',
+                    border: isSelected ? '1px solid #2563EB' : '1px solid #CBD5E1',
+                    borderRadius: '6px',
+                  }}
+                  onClick={() => {
+                    setLeadHours(lead);
+                    setIsPlaying(false);
+                  }}
+                >
+                  {lead === 0 ? 'Now' : `+${lead}h`}
+                </button>
+              );
+            })}
           </div>
 
           {/* Playback speed selector */}
-          <div className="flex items-center gap-1">
-            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Speed:</span>
-            {[1, 2, 5].map(spd => (
-              <button
-                key={spd}
-                className={`btn btn-sm ${playbackSpeed === spd ? 'btn-primary' : 'btn-ghost'}`}
-                style={{ fontSize: '0.65rem', padding: '0.15rem 0.35rem' }}
-                onClick={() => setPlaybackSpeed(spd)}
-              >
-                {spd}x
-              </button>
-            ))}
+          <div className="flex items-center gap-1.5">
+            <span style={{ fontSize: '0.7rem', color: '#64748B', fontWeight: 600 }}>Speed:</span>
+            {[1, 2, 5].map(spd => {
+              const isSelected = playbackSpeed === spd;
+              return (
+                <button
+                  key={spd}
+                  className="btn btn-sm"
+                  style={{
+                    fontSize: '0.68rem',
+                    padding: '0.2rem 0.45rem',
+                    fontWeight: isSelected ? 700 : 500,
+                    background: isSelected ? '#2563EB' : '#FFFFFF',
+                    color: isSelected ? '#FFFFFF' : '#1E3A5F',
+                    border: isSelected ? '1px solid #2563EB' : '1px solid #CBD5E1',
+                    borderRadius: '6px',
+                  }}
+                  onClick={() => setPlaybackSpeed(spd)}
+                >
+                  {spd}x
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

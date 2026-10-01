@@ -65,34 +65,53 @@ export function PastCyclonesExplorer({ onSelectStorm }: PastCyclonesExplorerProp
   };
 
   return (
-    <div style={{ flex: 1, overflow: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <div style={{ flex: 1, overflow: 'auto', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', background: '#F8FAFC' }}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 style={{ margin: 0 }}>📜 Past Cyclones Explorer</h2>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+          <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 700, color: '#0F172A' }}>
+            📜 Past Cyclones Explorer
+          </h2>
+          <p style={{ fontSize: '0.78rem', color: '#64748B', marginTop: '0.25rem' }}>
             North Indian Ocean (Bay of Bengal & Arabian Sea) historical archive • Replay in model engine
           </p>
         </div>
         {selectedItem && onSelectStorm && (
-          <button className="btn btn-sm btn-primary" onClick={handleLoadSelected}>
+          <button
+            className="btn btn-sm"
+            onClick={handleLoadSelected}
+            style={{
+              background: '#2563EB',
+              color: '#FFFFFF',
+              border: '1px solid #2563EB',
+              borderRadius: '8px',
+              padding: '0.45rem 0.85rem',
+              fontWeight: 600,
+              boxShadow: '0 2px 6px rgba(37,99,235,0.25)',
+            }}
+          >
             🌀 Load {selectedItem.name} in Dashboard & Replay
           </button>
         )}
       </div>
 
-      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap' }}>
         {/* Left: Table */}
         <div style={{ flex: 2, minWidth: '400px' }}>
           {/* Filters */}
-          <div className="flex items-center gap-2" style={{ marginBottom: '0.75rem' }}>
+          <div className="flex items-center gap-2.5" style={{ marginBottom: '0.85rem' }}>
             <select
               value={filterBasin}
               onChange={e => setFilterBasin(e.target.value)}
               style={{
-                padding: '0.35rem 0.6rem', background: 'var(--bg-card)',
-                border: '1px solid var(--border-default)', borderRadius: 'var(--radius-sm)',
-                color: 'var(--text-primary)', fontSize: '0.8rem',
+                padding: '0.4rem 0.75rem',
+                background: '#FFFFFF',
+                border: '1px solid #CBD5E1',
+                borderRadius: '8px',
+                color: '#0F172A',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+                outline: 'none',
               }}
             >
               <option value="">All Basins</option>
@@ -103,9 +122,14 @@ export function PastCyclonesExplorer({ onSelectStorm }: PastCyclonesExplorerProp
               value={filterYear}
               onChange={e => setFilterYear(e.target.value)}
               style={{
-                padding: '0.35rem 0.6rem', background: 'var(--bg-card)',
-                border: '1px solid var(--border-default)', borderRadius: 'var(--radius-sm)',
-                color: 'var(--text-primary)', fontSize: '0.8rem',
+                padding: '0.4rem 0.75rem',
+                background: '#FFFFFF',
+                border: '1px solid #CBD5E1',
+                borderRadius: '8px',
+                color: '#0F172A',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+                outline: 'none',
               }}
             >
               <option value="">All Years</option>
@@ -116,7 +140,7 @@ export function PastCyclonesExplorer({ onSelectStorm }: PastCyclonesExplorerProp
           </div>
 
           {/* Cyclones Table */}
-          <div className="card" style={{ overflow: 'auto' }}>
+          <div className="card" style={{ overflow: 'auto', border: '1px solid #E2E8F0', borderRadius: '12px' }}>
             <table className="data-table">
               <thead>
                 <tr>
@@ -140,33 +164,44 @@ export function PastCyclonesExplorer({ onSelectStorm }: PastCyclonesExplorerProp
                       onClick={() => setSelectedCyclone(c.id)}
                       style={{
                         cursor: 'pointer',
-                        background: isSelected ? 'rgba(59,130,246,0.15)' : undefined,
+                        background: isSelected ? '#EFF6FF' : undefined,
+                        borderLeft: isSelected ? '3px solid #2563EB' : '3px solid transparent',
                       }}
                     >
-                      <td style={{ fontFamily: 'var(--font-mono)' }}>{c.year}</td>
-                      <td style={{ fontWeight: 600 }}>{c.name}</td>
-                      <td>{c.basin === 'BOB' ? '🌊 BOB' : '🌊 ARB'}</td>
+                      <td style={{ fontFamily: 'var(--font-mono)', color: '#475569' }}>{c.year}</td>
+                      <td style={{ fontWeight: 700, color: '#0F172A' }}>{c.name}</td>
+                      <td style={{ color: '#0F172A' }}>{c.basin === 'BOB' ? '🌊 BOB' : '🌊 ARB'}</td>
                       <td>
                         <span
                           className="cat-badge"
                           style={{
-                            borderColor: cat.color + '60',
+                            borderColor: cat.color + '40',
                             color: cat.color,
                             background: cat.color + '15',
+                            fontWeight: 700,
+                            fontSize: '0.65rem',
                           }}
                         >
                           {c.peak_category}
                         </span>
                       </td>
-                      <td style={{ fontFamily: 'var(--font-mono)' }}>
-                        {c.peak_wind_kt} kt <span style={{ color: 'var(--text-muted)' }}>({Math.round(ktToKmh(c.peak_wind_kt))} km/h)</span>
+                      <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: '#0F172A' }}>
+                        {c.peak_wind_kt} kt <span style={{ color: '#64748B', fontSize: '0.7rem' }}>({Math.round(ktToKmh(c.peak_wind_kt))} km/h)</span>
                       </td>
-                      <td style={{ fontSize: '0.75rem' }}>{c.landfall}</td>
-                      <td style={{ color: 'var(--text-secondary)', fontSize: '0.75rem' }}>{c.months}</td>
+                      <td style={{ fontSize: '0.78rem', color: '#0F172A' }}>{c.landfall}</td>
+                      <td style={{ color: '#64748B', fontSize: '0.78rem' }}>{c.months}</td>
                       <td>
                         <button
-                          className="btn btn-sm btn-ghost"
-                          style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem' }}
+                          className="btn btn-sm"
+                          style={{
+                            fontSize: '0.7rem',
+                            padding: '0.25rem 0.55rem',
+                            background: '#FFFFFF',
+                            border: '1px solid #CBD5E1',
+                            color: '#1E3A5F',
+                            borderRadius: '6px',
+                            fontWeight: 600,
+                          }}
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectedCyclone(c.id);
@@ -187,34 +222,59 @@ export function PastCyclonesExplorer({ onSelectStorm }: PastCyclonesExplorerProp
 
           {/* Selected Storm Detail Card */}
           {selectedItem && (
-            <div className="card p-3" style={{ marginTop: '1rem', border: '1px solid var(--accent-blue)' }}>
+            <div className="card p-3" style={{ marginTop: '1.25rem', border: '1px solid #93C5FD', borderRadius: '12px', background: '#FFFFFF', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.06)' }}>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <span style={{ fontSize: '1.2rem' }}>🌀</span>
-                  <h4 style={{ margin: 0 }}>Cyclone {selectedItem.name} ({selectedItem.year})</h4>
-                  <span className="badge badge-demo">NIO Archive</span>
+                  <span style={{ fontSize: '1.3rem' }}>🌀</span>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700, color: '#0F172A' }}>
+                    Cyclone {selectedItem.name} ({selectedItem.year})
+                  </h4>
+                  <span
+                    className="badge"
+                    style={{
+                      background: '#EFF6FF',
+                      color: '#2563EB',
+                      border: '1px solid #DBEAFE',
+                      fontSize: '0.68rem',
+                      fontWeight: 600,
+                    }}
+                  >
+                    NIO Archive
+                  </span>
                 </div>
                 {onSelectStorm && (
-                  <button className="btn btn-sm btn-primary" onClick={handleLoadSelected}>
+                  <button
+                    className="btn btn-sm"
+                    style={{
+                      background: '#2563EB',
+                      color: '#FFFFFF',
+                      border: '1px solid #2563EB',
+                      borderRadius: '8px',
+                      padding: '0.35rem 0.75rem',
+                      fontWeight: 600,
+                      fontSize: '0.75rem',
+                    }}
+                    onClick={handleLoadSelected}
+                  >
                     Load into Dashboard
                   </button>
                 )}
               </div>
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.5rem', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.78rem', color: '#475569', marginTop: '0.65rem', lineHeight: 1.5 }}>
                 {selectedItem.keyInsights}
               </p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', marginTop: '0.5rem', fontSize: '0.7rem' }}>
-                <div style={{ background: 'var(--bg-tertiary)', padding: '0.4rem', borderRadius: 'var(--radius-sm)' }}>
-                  <span className="text-muted">Basin:</span> <strong>{selectedItem.basin === 'BOB' ? 'Bay of Bengal' : 'Arabian Sea'}</strong>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.65rem', marginTop: '0.65rem', fontSize: '0.74rem' }}>
+                <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '0.5rem 0.65rem', borderRadius: '8px' }}>
+                  <span style={{ color: '#64748B' }}>Basin:</span> <strong style={{ color: '#0F172A' }}>{selectedItem.basin === 'BOB' ? 'Bay of Bengal' : 'Arabian Sea'}</strong>
                 </div>
-                <div style={{ background: 'var(--bg-tertiary)', padding: '0.4rem', borderRadius: 'var(--radius-sm)' }}>
-                  <span className="text-muted">Peak Intensity:</span> <strong>{selectedItem.peak_wind_kt} kt</strong>
+                <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '0.5rem 0.65rem', borderRadius: '8px' }}>
+                  <span style={{ color: '#64748B' }}>Peak Intensity:</span> <strong style={{ color: '#0F172A' }}>{selectedItem.peak_wind_kt} kt</strong>
                 </div>
-                <div style={{ background: 'var(--bg-tertiary)', padding: '0.4rem', borderRadius: 'var(--radius-sm)' }}>
-                  <span className="text-muted">Landfall:</span> <strong>{selectedItem.landfall}</strong>
+                <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '0.5rem 0.65rem', borderRadius: '8px' }}>
+                  <span style={{ color: '#64748B' }}>Landfall:</span> <strong style={{ color: '#0F172A' }}>{selectedItem.landfall}</strong>
                 </div>
-                <div style={{ background: 'var(--bg-tertiary)', padding: '0.4rem', borderRadius: 'var(--radius-sm)' }}>
-                  <span className="text-muted">Season:</span> <strong>{selectedItem.months}</strong>
+                <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '0.5rem 0.65rem', borderRadius: '8px' }}>
+                  <span style={{ color: '#64748B' }}>Season:</span> <strong style={{ color: '#0F172A' }}>{selectedItem.months}</strong>
                 </div>
               </div>
             </div>
@@ -222,11 +282,13 @@ export function PastCyclonesExplorer({ onSelectStorm }: PastCyclonesExplorerProp
         </div>
 
         {/* Right: Seasonality & Category Distribution */}
-        <div style={{ flex: 1, minWidth: '280px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ flex: 1, minWidth: '280px', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           {/* Seasonality Chart */}
-          <div className="card">
+          <div className="card" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
             <div className="card-header">
-              <h4 style={{ fontSize: '0.8rem', margin: 0 }}>📅 NIO Cyclone Seasonality</h4>
+              <h4 style={{ fontSize: '0.85rem', margin: 0, fontWeight: 700, color: '#0F172A' }}>
+                📅 NIO Cyclone Seasonality
+              </h4>
             </div>
             <div className="card-body">
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '120px' }}>
@@ -239,8 +301,8 @@ export function PastCyclonesExplorer({ onSelectStorm }: PastCyclonesExplorerProp
                     }}
                   >
                     <span style={{
-                      fontSize: '0.55rem', color: 'var(--text-secondary)',
-                      marginBottom: '2px', fontFamily: 'var(--font-mono)',
+                      fontSize: '0.6rem', color: '#64748B',
+                      marginBottom: '2px', fontFamily: 'var(--font-mono)', fontWeight: 600,
                     }}>
                       {d.count.toFixed(1)}
                     </span>
@@ -248,53 +310,56 @@ export function PastCyclonesExplorer({ onSelectStorm }: PastCyclonesExplorerProp
                       width: '100%',
                       height: `${(d.count / maxCount) * 90}px`,
                       background: d.count > 1.0
-                        ? 'linear-gradient(to top, var(--accent-orange), var(--accent-red))'
+                        ? 'linear-gradient(to top, #F97316, #EF4444)'
                         : d.count > 0.5
-                        ? 'linear-gradient(to top, var(--accent-blue), var(--accent-cyan))'
-                        : 'var(--bg-card-hover)',
+                        ? 'linear-gradient(to top, #2563EB, #38BDF8)'
+                        : '#E2E8F0',
                       borderRadius: '3px 3px 0 0',
                       transition: 'height var(--transition-normal)',
                     }} />
-                    <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+                    <span style={{ fontSize: '0.6rem', color: '#64748B', marginTop: '4px', fontWeight: 500 }}>
                       {d.month}
                     </span>
                   </div>
                 ))}
               </div>
-              <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginTop: '0.5rem', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.65rem', color: '#64748B', marginTop: '0.65rem', textAlign: 'center' }}>
                 Bi-modal peak: Pre-monsoon (May) & Post-monsoon (Oct–Nov) • Source: IBTrACS
               </div>
             </div>
           </div>
 
           {/* Category Distribution */}
-          <div className="card">
+          <div className="card" style={{ border: '1px solid #E2E8F0', borderRadius: '12px' }}>
             <div className="card-header">
-              <h4 style={{ fontSize: '0.8rem', margin: 0 }}>📊 Category Scale</h4>
+              <h4 style={{ fontSize: '0.85rem', margin: 0, fontWeight: 700, color: '#0F172A' }}>
+                📊 Category Scale
+              </h4>
             </div>
-            <div className="card-body" style={{ padding: '0.5rem' }}>
+            <div className="card-body" style={{ padding: '0.65rem' }}>
               {IMD_CATEGORIES.filter(c => c.key !== 'LOW_PRESSURE').map(cat => (
                 <div
                   key={cat.key}
                   className="flex items-center gap-2"
                   style={{
-                    padding: '0.3rem 0.5rem',
-                    borderRadius: 'var(--radius-sm)',
-                    marginBottom: '0.25rem',
-                    background: cat.color + '08',
+                    padding: '0.35rem 0.6rem',
+                    borderRadius: '6px',
+                    marginBottom: '0.3rem',
+                    background: '#F8FAFC',
+                    border: '1px solid #E2E8F0',
                   }}
                 >
                   <div style={{
                     width: '12px', height: '12px',
-                    background: cat.color, borderRadius: '2px',
+                    background: cat.color, borderRadius: '3px',
                   }} />
-                  <span style={{ fontSize: '0.7rem', fontWeight: 600, color: cat.color, width: '45px' }}>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 700, color: cat.color, width: '48px' }}>
                     {cat.abbr}
                   </span>
-                  <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', flex: 1 }}>
+                  <span style={{ fontSize: '0.7rem', color: '#0F172A', flex: 1, fontWeight: 500 }}>
                     {cat.label}
                   </span>
-                  <span style={{ fontSize: '0.6rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
+                  <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: '#64748B' }}>
                     {cat.min_kt}–{cat.max_kt ?? '∞'} kt
                   </span>
                 </div>

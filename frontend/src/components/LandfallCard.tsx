@@ -24,15 +24,35 @@ export function LandfallCard({ storm }: LandfallCardProps) {
   const hoursToLandfall = Math.max(0, (etaP50.getTime() - now.getTime()) / 3600000);
 
   return (
-    <div className="card animate-slide-up">
-      <div className="card-header">
-        <h4 style={{ fontSize: '0.8rem', margin: 0 }}>🏖️ Landfall Prediction</h4>
+    <div
+      className="card animate-slide-up"
+      style={{
+        border: '1px solid #FED7AA',
+        boxShadow: '0 2px 10px rgba(249, 115, 22, 0.08)',
+        borderRadius: '12px',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        className="card-header"
+        style={{
+          background: '#c5c0c0c5',
+          borderBottom: '1px solid #f1f4f7ba',
+          borderTopLeftRadius: '11px',
+          borderTopRightRadius: '11px',
+        }}
+      >
+        <h4 style={{ fontSize: '0.85rem', margin: 0, fontWeight: 700, color: '#9A3412' }}>
+          🏖️ Landfall Prediction
+        </h4>
         <span
           className="badge"
           style={{
-            background: `rgba(239, 68, 68, ${Math.min(1, landfallData.probability) * 0.15})`,
-            color: 'var(--accent-red)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
+            background: landfallData.probability >= 0.75 ? '#FEF2F2' : '#FFF7ED',
+            color: landfallData.probability >= 0.75 ? '#DC2626' : '#EA580C',
+            border: `1px solid ${landfallData.probability >= 0.75 ? '#FECACA' : '#FED7AA'}`,
+            fontWeight: 700,
+            fontSize: '0.72rem',
           }}
         >
           {(landfallData.probability * 100).toFixed(0)}% likely
@@ -40,21 +60,22 @@ export function LandfallCard({ storm }: LandfallCardProps) {
       </div>
       <div className="card-body">
         {/* Location */}
-        <div className="flex justify-between items-center" style={{ marginBottom: '0.5rem' }}>
+        <div className="flex justify-between items-center" style={{ marginBottom: '0.65rem' }}>
           <div>
-            <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>
+            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0F172A' }}>
               {landfallData.nearest_district}, {landfallData.nearest_state}
             </div>
-            <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+            <div style={{ fontSize: '0.68rem', color: '#64748B', fontFamily: 'var(--font-mono)' }}>
               {landfallData.lat?.toFixed(1)}°N, {landfallData.lon?.toFixed(1)}°E
             </div>
           </div>
           <div
             className="cat-badge"
             style={{
-              borderColor: storm.category_color + '60',
+              borderColor: storm.category_color + '40',
               color: storm.category_color,
               background: storm.category_color + '15',
+              fontWeight: 700,
             }}
           >
             {landfallData.category_at_landfall} at landfall
@@ -63,24 +84,25 @@ export function LandfallCard({ storm }: LandfallCardProps) {
 
         {/* ETA countdown */}
         <div style={{
-          background: 'var(--bg-tertiary)',
-          borderRadius: 'var(--radius-sm)',
-          padding: '0.75rem',
+          background: '#FFF7ED',
+          border: '1px solid #FED7AA',
+          borderRadius: '8px',
+          padding: '0.85rem',
           textAlign: 'center',
-          marginBottom: '0.5rem',
+          marginBottom: '0.65rem',
         }}>
-          <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>
-            ESTIMATED LANDFALL
+          <div style={{ fontSize: '0.68rem', color: '#9A3412', fontWeight: 700, letterSpacing: '0.04em', marginBottom: '0.2rem' }}>
+            ESTIMATED TIME TO LANDFALL
           </div>
           <div style={{
-            fontSize: '1.5rem',
-            fontWeight: 700,
+            fontSize: '1.75rem',
+            fontWeight: 800,
             fontFamily: 'var(--font-mono)',
-            color: 'var(--accent-red)',
+            color: '#EA580C',
           }}>
             T-{hoursToLandfall.toFixed(0)}h
           </div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+          <div style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: 600, marginTop: '0.2rem' }}>
             {etaP50.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' })} IST
           </div>
         </div>
@@ -89,21 +111,22 @@ export function LandfallCard({ storm }: LandfallCardProps) {
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          fontSize: '0.65rem',
-          padding: '0.375rem 0.5rem',
-          background: 'var(--bg-tertiary)',
-          borderRadius: 'var(--radius-sm)',
-          marginBottom: '0.5rem',
+          fontSize: '0.7rem',
+          padding: '0.45rem 0.65rem',
+          background: '#F8FAFC',
+          border: '1px solid #E2E8F0',
+          borderRadius: '8px',
+          marginBottom: '0.55rem',
         }}>
           <div>
-            <span className="text-muted">Earliest (P10): </span>
-            <span className="text-mono">
+            <span style={{ color: '#64748B' }}>Earliest (P10): </span>
+            <span className="text-mono" style={{ fontWeight: 600, color: '#0F172A' }}>
               {landfallData.eta_p10 ? new Date(landfallData.eta_p10).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }) + ' IST' : '—'}
             </span>
           </div>
           <div>
-            <span className="text-muted">Latest (P90): </span>
-            <span className="text-mono">
+            <span style={{ color: '#64748B' }}>Latest (P90): </span>
+            <span className="text-mono" style={{ fontWeight: 600, color: '#0F172A' }}>
               {landfallData.eta_p90 ? new Date(landfallData.eta_p90).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }) + ' IST' : '—'}
             </span>
           </div>
@@ -113,12 +136,15 @@ export function LandfallCard({ storm }: LandfallCardProps) {
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          fontSize: '0.7rem',
-          padding: '0.375rem 0',
+          fontSize: '0.72rem',
+          padding: '0.45rem 0.65rem',
+          background: '#F8FAFC',
+          border: '1px solid #E2E8F0',
+          borderRadius: '8px',
         }}>
           <div>
-            <span className="text-muted">Wind at landfall: </span>
-            <span className="text-mono" style={{ fontWeight: 600, color: storm.category_color }}>
+            <span style={{ color: '#64748B', fontWeight: 500 }}>Wind at landfall: </span>
+            <span className="text-mono" style={{ fontWeight: 700, color: storm.category_color }}>
               {landfallData.wind_at_landfall_kt} kt ({Math.round(landfallData.wind_at_landfall_kt! * 1.852)} km/h)
             </span>
           </div>
@@ -126,9 +152,9 @@ export function LandfallCard({ storm }: LandfallCardProps) {
 
         {/* Disclaimer */}
         <div style={{
-          fontSize: '0.55rem',
-          color: 'var(--text-muted)',
-          marginTop: '0.5rem',
+          fontSize: '0.62rem',
+          color: '#94A3B8',
+          marginTop: '0.55rem',
           lineHeight: 1.5,
           fontStyle: 'italic',
         }}>

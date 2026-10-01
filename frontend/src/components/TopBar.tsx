@@ -7,6 +7,7 @@ interface TopBarProps {
   demoMode: boolean;
   activeStorm: Storm | null;
   onSelectStorm?: (stormId: string) => void;
+  onOpenDisclaimer?: () => void;
 }
 
 const NAV_ITEMS = [
@@ -24,6 +25,7 @@ export function TopBar({
   demoMode,
   activeStorm,
   onSelectStorm,
+  onOpenDisclaimer,
 }: TopBarProps) {
   return (
     <header
@@ -194,6 +196,40 @@ export function TopBar({
             </button>
           );
         })}
+
+        {/* AI Advisory / Scientific Safety Info Button */}
+        {onOpenDisclaimer && (
+          <button
+            onClick={onOpenDisclaimer}
+            title="Scientific Safety, Responsible AI & Data Advisory"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              padding: '0.4rem 0.7rem',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              transition: 'all 150ms ease',
+              background: '#F0F9FF',
+              color: '#0EA5E9',
+              border: '1px solid #BAE6FD',
+              marginLeft: '0.25rem',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#E0F2FE';
+              e.currentTarget.style.borderColor = '#7DD3FC';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#F0F9FF';
+              e.currentTarget.style.borderColor = '#BAE6FD';
+            }}
+          >
+            <span style={{ fontSize: '0.85rem' }}>ⓘ</span>
+            <span>AI Advisory</span>
+          </button>
+        )}
       </nav>
     </header>
   );

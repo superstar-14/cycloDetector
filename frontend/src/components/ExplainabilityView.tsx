@@ -234,6 +234,40 @@ export function ExplainabilityView({ storm }: ExplainabilityViewProps) {
           </div>
         </div>
       </div>
+
+      {/* L – Explainability & Feature Attribution Disclaimer */}
+      <div
+        style={{
+          fontSize: '0.72rem',
+          color: '#475569',
+          padding: '0.85rem 1rem',
+          background: '#FFFFFF',
+          border: '1px solid #E2E8F0',
+          borderRadius: '10px',
+          lineHeight: 1.7,
+          display: 'flex',
+          gap: '0.65rem',
+          alignItems: 'flex-start',
+        }}
+      >
+        <span style={{ color: '#0EA5E9', fontSize: '1rem', flexShrink: 0 }}>ⓘ</span>
+        <div>
+          <strong style={{ color: '#0F172A', display: 'block', marginBottom: '0.25rem', fontSize: '0.75rem' }}>
+            Explainability & Feature Attribution Disclaimer
+          </strong>
+          <span>
+            <strong>SHAP values</strong> indicate the model's learned statistical relationships with the prediction
+            target and should <em>not</em> automatically be interpreted as direct physical causation unless
+            independently verified by meteorological research.{' '}
+            <strong>Grad-CAM saliency maps</strong> highlight image regions that most influenced model decisions,
+            reflecting learned attention patterns — not a physics-based derivation.{' '}
+            <strong>Dvorak comparisons</strong> illustrate consistency with established empirical methods and are
+            not a substitute for expert meteorological analysis. Feature importance indicates association;{' '}
+            <em>it does not imply that any AI-identified factor "causes" cyclone formation or intensification</em>{' '}
+            unless independently established by the underlying meteorological science.
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

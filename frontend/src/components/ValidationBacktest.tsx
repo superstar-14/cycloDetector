@@ -356,6 +356,40 @@ export function ValidationBacktest() {
           </div>
         </div>
       </div>
+
+      {/* K – Backtest & Historical Validation Disclaimer */}
+      <div
+        style={{
+          fontSize: '0.72rem',
+          color: '#475569',
+          padding: '0.85rem 1rem',
+          background: '#FFFFFF',
+          border: '1px solid #E2E8F0',
+          borderRadius: '10px',
+          lineHeight: 1.7,
+          display: 'flex',
+          gap: '0.65rem',
+          alignItems: 'flex-start',
+        }}
+      >
+        <span style={{ color: '#0EA5E9', fontSize: '1rem', flexShrink: 0 }}>ⓘ</span>
+        <div>
+          <strong style={{ color: '#0F172A', display: 'block', marginBottom: '0.25rem', fontSize: '0.75rem' }}>
+            Historical Validation Disclaimer
+          </strong>
+          <span>
+            Backtest metrics — track error, intensity MAE, RI confusion matrix — describe model performance on the
+            evaluated historical dataset (42 NIO cyclones, 2014–2024, IMD Best Tracks + IBTrACS) and{' '}
+            <strong>do not guarantee equivalent future forecast performance</strong>. The comparison against the IMD
+            operational baseline uses post-season archived records, not real-time guidance. Selection of evaluated
+            storms may not represent all cyclone types or future climate regimes.{' '}
+            <em>
+              Historical validation metrics should not be interpreted as a guarantee of operational prediction
+              accuracy for any future cyclone.
+            </em>
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

@@ -876,7 +876,7 @@ export function Dashboard({ storm }: DashboardProps) {
             </div>
           )}
 
-          {/* Map Legends bar */}
+          {/* Map Legends bar – Wind Radii + Track Type Legend (Prompt E, G) */}
           <div
             style={{
               position: 'absolute',
@@ -884,27 +884,44 @@ export function Dashboard({ storm }: DashboardProps) {
               left: 12,
               background: 'rgba(255, 255, 255, 0.95)',
               border: '1px solid #E2E8F0',
-              padding: '5px 12px',
+              padding: '6px 12px',
               borderRadius: '8px',
-              fontSize: '0.7rem',
+              fontSize: '0.68rem',
               display: 'flex',
-              gap: '14px',
-              alignItems: 'center',
+              flexDirection: 'column',
+              gap: '5px',
               boxShadow: '0 2px 8px rgba(15, 23, 42, 0.08)',
               backdropFilter: 'blur(8px)',
               color: '#0F172A',
             }}
           >
-            <span className="flex items-center gap-1.5" style={{ fontWeight: 600 }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#EF4444' }} /> R64 (≥64kt)
-            </span>
-            <span className="flex items-center gap-1.5" style={{ fontWeight: 600 }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#F59E0B' }} /> R50 (≥50kt)
-            </span>
-            <span className="flex items-center gap-1.5" style={{ fontWeight: 600 }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22C55E' }} /> R34 (≥34kt)
-            </span>
-            <span style={{ color: '#64748B' }}>| Scale: ~100 km</span>
+            {/* Wind Radii row */}
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <span style={{ fontWeight: 700, color: '#475569', fontSize: '0.65rem', letterSpacing: '0.03em' }}>WIND RADII</span>
+              <span className="flex items-center gap-1.5" style={{ fontWeight: 600 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#EF4444', display: 'inline-block' }} /> R64 (≥64kt)
+              </span>
+              <span className="flex items-center gap-1.5" style={{ fontWeight: 600 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#F59E0B', display: 'inline-block' }} /> R50 (≥50kt)
+              </span>
+              <span className="flex items-center gap-1.5" style={{ fontWeight: 600 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22C55E', display: 'inline-block' }} /> R34 (≥34kt)
+              </span>
+              <span style={{ color: '#64748B' }}>| ~100 km</span>
+            </div>
+            {/* Track type row (Prompt E) */}
+            <div style={{ display: 'flex', gap: '14px', alignItems: 'center', borderTop: '1px dashed #E2E8F0', paddingTop: '4px' }}>
+              <span style={{ fontWeight: 700, color: '#475569', fontSize: '0.65rem', letterSpacing: '0.03em' }}>TRACK TYPE</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontWeight: 600, fontSize: '0.68rem' }}>
+                <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="#0EA5E9" strokeWidth="2.5" /></svg>
+                Observed / Best-Track
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontWeight: 600, fontSize: '0.68rem' }}>
+                <svg width="22" height="6"><line x1="0" y1="3" x2="22" y2="3" stroke="#3B82F6" strokeWidth="2" strokeDasharray="4 3" /></svg>
+                Forecast (AI Model)
+              </span>
+              <span style={{ color: '#94A3B8', fontSize: '0.63rem', fontStyle: 'italic' }}>Replay Archive – not live data</span>
+            </div>
           </div>
         </div>
 

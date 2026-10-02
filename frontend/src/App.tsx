@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './index.css';
 import { Dashboard } from './components/Dashboard';
 import { TopBar } from './components/TopBar';
@@ -8,6 +8,7 @@ import { ValidationBacktest } from './components/ValidationBacktest';
 import { ExplainabilityView } from './components/ExplainabilityView';
 import { PastCyclonesExplorer } from './components/PastCyclonesExplorer';
 import { DisclaimerModal } from './components/DisclaimerModal';
+import { SatellitePage } from './components/SatellitePage';
 import { HISTORICAL_STORMS_MAP, HISTORICAL_STORMS_LIST } from './data/historicalStorms';
 import type { Storm } from './types';
 
@@ -17,13 +18,28 @@ type Page =
   | 'districts'
   | 'backtest'
   | 'explain'
-  | 'history';
+  | 'history'
+  | 'satellite';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('dashboard');
+  const [currentPage, setCurrentPage] = useState<Page>(() => {
+    return window.location.pathname === '/satellite' ? 'satellite' : 'dashboard';
+  });
   const [selectedStormId, setSelectedStormId] = useState<string>('NIO_2019_BOB_FANI');
   const [demoMode, setDemoMode] = useState<boolean>(true);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (window.location.pathname === '/satellite') {
+        setCurrentPage('satellite');
+      } else {
+        setCurrentPage('dashboard');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Retrieve selected storm object
   const activeStorm: Storm =
@@ -64,6 +80,9 @@ function App() {
         )}
         {currentPage === 'history' && (
           <PastCyclonesExplorer onSelectStorm={handleSelectStorm} />
+        )}
+        {currentPage === 'satellite' && (
+          <SatellitePage storm={activeStorm} />
         )}
       </div>
 

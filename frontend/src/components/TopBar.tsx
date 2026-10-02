@@ -1,5 +1,6 @@
 import type { Storm } from '../types';
 import { HISTORICAL_STORMS_LIST } from '../data/historicalStorms';
+import { Satellite } from 'lucide-react';
 
 interface TopBarProps {
   currentPage: string;
@@ -197,39 +198,44 @@ export function TopBar({
           );
         })}
 
-        {/* AI Advisory / Scientific Safety Info Button */}
-        {onOpenDisclaimer && (
-          <button
-            onClick={onOpenDisclaimer}
-            title="Scientific Safety, Responsible AI & Data Advisory"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.35rem',
-              fontSize: '0.75rem',
-              fontWeight: 600,
-              padding: '0.4rem 0.7rem',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              transition: 'all 150ms ease',
-              background: '#F0F9FF',
-              color: '#0EA5E9',
-              border: '1px solid #BAE6FD',
-              marginLeft: '0.25rem',
-            }}
-            onMouseEnter={(e) => {
+        {/* Satellite Imagery Navigation Button */}
+        <button
+          onClick={() => {
+            window.history.pushState(null, '', '/satellite');
+            onPageChange('satellite');
+          }}
+          title="Satellite Imagery Timeline"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.35rem',
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            padding: '0.4rem 0.7rem',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            transition: 'all 150ms ease',
+            background: currentPage === 'satellite' ? '#2563EB' : '#F0F9FF',
+            color: currentPage === 'satellite' ? '#FFFFFF' : '#0EA5E9',
+            border: currentPage === 'satellite' ? '1px solid #2563EB' : '1px solid #BAE6FD',
+            marginLeft: '0.25rem',
+          }}
+          onMouseEnter={(e) => {
+            if (currentPage !== 'satellite') {
               e.currentTarget.style.backgroundColor = '#E0F2FE';
               e.currentTarget.style.borderColor = '#7DD3FC';
-            }}
-            onMouseLeave={(e) => {
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (currentPage !== 'satellite') {
               e.currentTarget.style.backgroundColor = '#F0F9FF';
               e.currentTarget.style.borderColor = '#BAE6FD';
-            }}
-          >
-            <span style={{ fontSize: '0.85rem' }}>ⓘ</span>
-            <span>AI Advisory</span>
-          </button>
-        )}
+            }
+          }}
+        >
+          <Satellite size={14} />
+          <span>Satellite</span>
+        </button>
       </nav>
     </header>
   );

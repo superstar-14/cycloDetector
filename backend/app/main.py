@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import ORJSONResponse
 
 from .config import settings
-from .api import storms, layers, history, health, websocket_router, alerts
+from .api import storms, layers, history, health, websocket_router, alerts, satellite
 
 
 logger = logging.getLogger(__name__)
@@ -61,6 +61,7 @@ app.include_router(history.router, prefix="/api/history", tags=["History"])
 app.include_router(health.router, prefix="/api/health", tags=["Health"])
 app.include_router(alerts.router, prefix="/api/alerts", tags=["Vulnerability Alerts"])
 app.include_router(websocket_router.router, prefix="/ws", tags=["WebSocket"])
+app.include_router(satellite.router, prefix="/api", tags=["Satellite"])
 
 
 @app.get("/", tags=["Root"])
